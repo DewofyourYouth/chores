@@ -1,3 +1,4 @@
+import 'package:chores/queries.dart';
 import 'package:flutter/material.dart';
 import 'kid_button.dart';
 import 'kid_input.dart';
@@ -52,6 +53,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<String> kids = [];
   final myController = TextEditingController();
+  final FutureBuilder kidsFuture = getMongoKidsWidgets();
 
   void _addKid() {
     setState(() {
@@ -61,7 +63,6 @@ class _MyHomePageState extends State<MyHomePage> {
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       kids.add(myController.text);
-
       // log(kids.toString());
       myController.text = "";
     });
@@ -101,8 +102,9 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            KidInput(myController: myController),
-            getKids(kids),
+            kidsFuture,
+            // KidInput(myController: myController),
+            // getKids(kids),
           ],
         ),
       ),
@@ -123,3 +125,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+// Wrap getKidss(List<Kid> kids) {
+//   var kidsNames = kids.map((kid) => KidButton(name: kid.name));
+//   return Wrap(
+//     runSpacing: 5.0,
+//     spacing: 5.0,
+//     children: [...kidsNames],
+//   );
+// }
+
