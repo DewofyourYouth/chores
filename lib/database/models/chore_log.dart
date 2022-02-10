@@ -1,8 +1,6 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'dart:convert';
 
-// import 'package:mongo_dart/mongo_dart.dart';
-
 class ChoreLog {
   // ObjectId id;
   DateTime calendarDay;
