@@ -1,6 +1,7 @@
-import 'package:chores/pages/chores_page.dart';
-import 'package:chores/queries.dart';
 import 'package:flutter/material.dart';
+
+import 'package:chores/pages/chores_page.dart';
+import '../../database/models/kid.dart';
 
 class Data {
   String name;

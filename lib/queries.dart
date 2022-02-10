@@ -6,18 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
-class Kid {
-  ObjectId id;
-  String name;
-  int dailyPoints;
-  int alternatingPoints;
-
-  Kid(
-      {required this.id,
-      required this.name,
-      required this.dailyPoints,
-      required this.alternatingPoints});
-}
+import 'database/models/kid.dart';
 
 Future<List<Kid>> getKidsMongo() async {
   Db db = await Db.create(dbString);
