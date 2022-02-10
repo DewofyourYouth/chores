@@ -8,8 +8,8 @@ class Data {
   Data({required this.name});
 }
 
-class KidButton extends StatelessWidget {
-  KidButton({
+class KidCard extends StatelessWidget {
+  KidCard({
     required this.kid,
   }) : super(key: ObjectKey(kid));
   final Kid kid;
@@ -28,8 +28,11 @@ class KidButton extends StatelessWidget {
               kid.name,
               style: const TextStyle(fontFamily: "RobotoSlab"),
             ),
-            subtitle: Text(
-                "Alternating Points: ${kid.alternatingPoints}, Daily Points: ${kid.dailyPoints}, Total: ${kid.alternatingPoints + kid.dailyPoints}"),
+            subtitle: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                  "Alternating Points: ${kid.alternatingPoints}, Daily Points: ${kid.dailyPoints}, Total: ${kid.alternatingPoints + kid.dailyPoints}"),
+            ),
           ),
           ElevatedButton.icon(
             onPressed: () {

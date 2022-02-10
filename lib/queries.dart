@@ -43,20 +43,26 @@ FutureBuilder getMongoKidsWidgets() {
       future: kids,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Column(
-            children: const [
-              SpinKitPianoWave(
-                color: Colors.deepPurple,
-                size: 100.0,
-              ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "Fetching your kids! (From MongoDB)",
-                  style: TextStyle(fontFamily: "RobotoSlab"),
+          return SizedBox(
+            height: 1,
+            child: Column(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 40.0, 0, 20.0),
+                  child: SpinKitPianoWave(
+                    color: Colors.deepPurple,
+                    size: 200.0,
+                  ),
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text(
+                    "Fetching your kids! (From MongoDB)",
+                    style: TextStyle(fontFamily: "RobotoSlab"),
+                  ),
+                ),
+              ],
+            ),
           );
         }
         if (snapshot.hasError) {
@@ -64,7 +70,7 @@ FutureBuilder getMongoKidsWidgets() {
         }
         if (snapshot.hasData) {
           return Wrap(
-            children: [...snapshot.data.map((k) => KidButton(kid: k))],
+            children: [...snapshot.data.map((k) => KidCard(kid: k))],
           );
         } else {
           return const Text("Howdy");
