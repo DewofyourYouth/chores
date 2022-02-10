@@ -22,15 +22,19 @@ class KidCard extends StatelessWidget {
     return Card(
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
-            leading: const Icon(Icons.child_care),
+            leading: const Icon(
+              Icons.child_care,
+              color: Color(0xff64ffda),
+            ),
             title: Text(
               kid.name,
-              style: const TextStyle(fontFamily: "RobotoSlab"),
+              style: Theme.of(context).textTheme.headline4,
             ),
             subtitle: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(0, 8.0, 8.0, 8.0),
               child: Text(
                   "Alternating Points: ${kid.alternatingPoints}, Daily Points: ${kid.dailyPoints}, Total: ${kid.alternatingPoints + kid.dailyPoints}"),
             ),
@@ -43,7 +47,11 @@ class KidCard extends StatelessWidget {
                       builder: (context) => KidsChoresPage(data: data)));
             },
             label: Text("Go to ${kid.name} page"),
-            icon: Icon(Icons.navigate_next, color: white, size: 30.0),
+            icon: Icon(
+              Icons.navigate_next,
+              color: white,
+              size: 30.0,
+            ),
           )
         ],
       ),
