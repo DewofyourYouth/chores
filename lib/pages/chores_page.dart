@@ -2,19 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../components/chores/chore_card.dart';
-import '../components/kids/kid_button.dart';
+import '../components/kids/kid_card.dart';
+import '../constants.dart';
 
 class KidsChoresPage extends StatelessWidget {
   final Data data;
-  KidsChoresPage({Key? key, required this.data}) : super(key: key);
-
-  // final String name;
-  final List<String> chores = [
-    "Breakfast: clear dishes and utensils",
-    "Clearing dishes after meals",
-    "Put away coats, tik and shoes",
-    "Clear toys"
-  ];
+  const KidsChoresPage({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +35,7 @@ class KidsChoresPage extends StatelessWidget {
                 ),
               ),
             ),
-            ...chores.map((c) => Container(
+            ...daiyChores.map((c) => Container(
                 color: Colors.blue,
                 child: Center(
                   child: ChoreCard(chore: c),
@@ -54,4 +47,3 @@ class KidsChoresPage extends StatelessWidget {
   }
 }
 //
-

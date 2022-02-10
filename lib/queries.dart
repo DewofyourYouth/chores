@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:chores/components/kids/kid_button.dart';
+import 'package:chores/components/kids/kid_card.dart';
 import 'package:chores/secrets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -9,8 +9,14 @@ import 'package:mongo_dart/mongo_dart.dart';
 class Kid {
   ObjectId id;
   String name;
+  int dailyPoints;
+  int alternatingPoints;
 
-  Kid({required this.id, required this.name});
+  Kid(
+      {required this.id,
+      required this.name,
+      required this.dailyPoints,
+      required this.alternatingPoints});
 }
 
 Future<List<Kid>> getKidsMongo() async {
@@ -21,7 +27,11 @@ Future<List<Kid>> getKidsMongo() async {
   var kids = await kidsCollection.find().toList();
   List<Kid> kidList = [];
   for (var kid in kids) {
-    var k = Kid(id: kid["_id"], name: kid["name"]);
+    var k = Kid(
+        id: kid["_id"],
+        name: kid["name"],
+        dailyPoints: kid['dailyPoints'],
+        alternatingPoints: kid['alternatingPoints']);
     kidList.add(k);
   }
   return kidList;
@@ -54,7 +64,7 @@ FutureBuilder getMongoKidsWidgets() {
         }
         if (snapshot.hasData) {
           return Wrap(
-            children: [...snapshot.data.map((k) => KidButton(name: k.name))],
+            children: [...snapshot.data.map((k) => KidButton(kid: k))],
           );
         } else {
           return const Text("Howdy");

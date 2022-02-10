@@ -1,6 +1,5 @@
 import 'package:chores/queries.dart';
 import 'package:flutter/material.dart';
-import 'components/kids/kid_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -115,15 +114,15 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Wrap getKids(List<String> kids) {
-    var kidList = kids.map((k) => KidButton(name: k));
-    return Wrap(
-      runSpacing: 5.0,
-      spacing: 5.0,
-      children: [...kidList],
-    );
-  }
-}
+//   Wrap getKids(List<String> kids) {
+//     var kidList = kids.map((k) => KidButton(kid: k));
+//     return Wrap(
+//       runSpacing: 5.0,
+//       spacing: 5.0,
+//       children: [...kidList],
+//     );
+//   }
+// }
 
 // Wrap getKidss(List<Kid> kids) {
 //   var kidsNames = kids.map((kid) => KidButton(name: kid.name));
@@ -132,5 +131,4 @@ class _MyHomePageState extends State<MyHomePage> {
 //     spacing: 5.0,
 //     children: [...kidsNames],
 //   );
-// }
-
+}
