@@ -1,8 +1,9 @@
 import 'dart:developer';
 
-import 'package:chores/kid_button.dart';
+import 'package:chores/components/kids/kid_button.dart';
 import 'package:chores/secrets.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
 class Kid {
@@ -32,7 +33,21 @@ FutureBuilder getMongoKidsWidgets() {
       future: kids,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Text("Loading");
+          return Column(
+            children: const [
+              SpinKitPianoWave(
+                color: Colors.deepPurple,
+                size: 100.0,
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "Fetching your kids! (From MongoDB)",
+                  style: TextStyle(fontFamily: "RobotoSlab"),
+                ),
+              ),
+            ],
+          );
         }
         if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
@@ -42,7 +57,7 @@ FutureBuilder getMongoKidsWidgets() {
             children: [...snapshot.data.map((k) => KidButton(name: k.name))],
           );
         } else {
-          return Text("Howdy");
+          return const Text("Howdy");
         }
       });
 }

@@ -1,4 +1,4 @@
-import 'package:chores/chores_page.dart';
+import 'package:chores/pages/chores_page.dart';
 import 'package:flutter/material.dart';
 
 class Data {

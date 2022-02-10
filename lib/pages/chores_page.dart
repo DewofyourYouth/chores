@@ -1,9 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'kid_button.dart';
+import '../components/chores/chore_card.dart';
+import '../components/kids/kid_button.dart';
 
 class KidsChoresPage extends StatelessWidget {
   final Data data;
@@ -35,7 +34,7 @@ class KidsChoresPage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 15.0),
               child: Center(
                 child: Text(
-                  "Chores for ${DateFormat.yMMMd().format(now)}:",
+                  "Chores for ${DateFormat("EEEE, MMM d").format(now)}:",
                   style: const TextStyle(
                     fontFamily: "RobotoSlab",
                     fontSize: 20,
@@ -56,38 +55,3 @@ class KidsChoresPage extends StatelessWidget {
 }
 //
 
-class ChoreCard extends StatelessWidget {
-  final String chore;
-  const ChoreCard({
-    Key? key,
-    required this.chore,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        ListTile(
-          leading: const Icon(Icons.cleaning_services),
-          title: Text(
-            chore,
-            style: const TextStyle(fontFamily: "RobotoSlab"),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextButton(
-              child: const Text("Done"),
-              onPressed: () => log("Done"),
-            ),
-            TextButton(
-                onPressed: () => log("Not Done"), child: const Text("Not Done"))
-          ],
-        )
-      ],
-    ));
-  }
-}

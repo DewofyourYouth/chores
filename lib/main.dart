@@ -1,7 +1,6 @@
 import 'package:chores/queries.dart';
 import 'package:flutter/material.dart';
-import 'kid_button.dart';
-import 'kid_input.dart';
+import 'components/kids/kid_button.dart';
 
 void main() {
   runApp(const MyApp());
