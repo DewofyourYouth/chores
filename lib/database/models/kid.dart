@@ -37,18 +37,7 @@ class Kid {
     };
   }
 
-  factory Kid.fromMap(Map<String, dynamic> map) {
-    return Kid(
-      id: ObjectId.fromHexString(map['id']),
-      name: map['name'] ?? '',
-      dailyPoints: map['dailyPoints']?.toInt() ?? 0,
-      alternatingPoints: map['alternatingPoints']?.toInt() ?? 0,
-    );
-  }
-
   String toJson() => json.encode(toMap());
-
-  factory Kid.fromJson(String source) => Kid.fromMap(json.decode(source));
 
   @override
   String toString() {

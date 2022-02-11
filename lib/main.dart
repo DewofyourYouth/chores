@@ -1,4 +1,4 @@
-import 'package:chores/queries.dart';
+import 'package:chores/database/queries.dart';
 import 'package:flutter/material.dart';
 
 void main() {

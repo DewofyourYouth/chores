@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 class ChoreLog {
-  // ObjectId id;
   DateTime calendarDay;
   String kidName;
   String chore;
@@ -36,8 +35,9 @@ class ChoreLog {
 
   Map<String, dynamic> toMap() {
     return {
-      // 'id': id.toHexString(),
-      'calendarDay': calendarDay.millisecondsSinceEpoch,
+      '_id':
+          "${calendarDay.toString()}:$kidName:${chore.split(' ').map((s) => s.trim()).join('')}",
+      'calendarDay': calendarDay,
       'kidName': kidName,
       'chore': chore,
       'isDone': isDone,
@@ -47,7 +47,6 @@ class ChoreLog {
 
   factory ChoreLog.fromMap(Map<String, dynamic> map) {
     return ChoreLog(
-      // id: ObjectId.fromHexString(map['id']),
       calendarDay: DateTime.fromMillisecondsSinceEpoch(map['calendarDay']),
       kidName: map['kidName'] ?? '',
       chore: map['chore'] ?? '',

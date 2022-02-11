@@ -1,10 +1,17 @@
+import 'dart:developer';
+
+import 'package:chores/database/models/chore_log.dart';
+import 'package:chores/database/queries.dart';
+import 'package:chores/utils/dates.dart';
 import 'package:flutter/material.dart';
 
 class ChoreCard extends StatefulWidget {
   final String chore;
+  final String name;
   const ChoreCard({
     Key? key,
     required this.chore,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -18,6 +25,21 @@ class _ChoreCardState extends State<ChoreCard> {
     setState(() {
       done = !done;
     });
+  }
+
+  void markChoreAsDone() {
+    log("marking as done");
+    setState(() {
+      done = true;
+    });
+    DateTime now = DateTime.now();
+    ChoreLog choreLog = ChoreLog(
+        calendarDay: getDay(),
+        kidName: widget.name,
+        chore: widget.chore,
+        isDone: done,
+        isAlternating: false);
+    insertChore(choreLog);
   }
 
   IconButton getDoneIcon() => !done
@@ -49,17 +71,9 @@ class _ChoreCardState extends State<ChoreCard> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            TextButton(child: const Text("Done"), onPressed: markChoreAsDone),
             TextButton(
-              child: const Text("Done"),
-              onPressed: () => setState(() {
-                done = true;
-              }),
-            ),
-            TextButton(
-                onPressed: () => setState(() {
-                      done = false;
-                    }),
-                child: const Text("Not Done"))
+                onPressed: markChoreAsDone, child: const Text("Not Done"))
           ],
         )
       ],

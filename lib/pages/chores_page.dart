@@ -38,7 +38,10 @@ class KidsChoresPage extends StatelessWidget {
             ...daiyChores.map((c) => Container(
                 color: Colors.blue,
                 child: Center(
-                  child: ChoreCard(chore: c),
+                  child: ChoreCard(
+                    chore: c,
+                    name: name,
+                  ),
                 )))
           ],
         ),
