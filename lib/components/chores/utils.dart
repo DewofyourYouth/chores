@@ -13,12 +13,6 @@ String dateFormatter(DateTime date) {
   return formatDate(date, [yyyy, "-", mm, "-", dd]);
 }
 
-String createChoreLogId(DateTime date, String kidName, String chore) {
-  String fmtDate = dateFormatter(date);
-  var choreStripped = choreFormatter(chore);
-  return "$fmtDate:$kidName:$choreStripped";
-}
-
 String createChoreDayId(String kidName, DateTime date) {
   var fmtDate = dateFormatter(date);
   var kid = choreFormatter(kidName);

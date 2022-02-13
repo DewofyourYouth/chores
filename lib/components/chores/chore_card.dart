@@ -4,12 +4,12 @@ import 'package:chores/database/queries.dart';
 import 'package:flutter/material.dart';
 
 import '../../database/models/chore_day.dart';
+import '../ui/done_indicator.dart';
 
 class ChoreCard extends StatefulWidget {
   final String chore;
   final ChoreDay chores;
   final String name;
-  // final bool done;
   const ChoreCard({
     Key? key,
     required this.chore,
@@ -39,19 +39,6 @@ class _ChoreCardState extends State<ChoreCard> {
     updateChore(widget.chores);
   }
 
-  Icon getDoneIcon() {
-    Icon icon;
-    if (!getCurrentChore().done) {
-      icon = const Icon(Icons.radio_button_unchecked);
-    } else {
-      icon = const Icon(
-        Icons.check_circle,
-        color: Colors.green,
-      );
-    }
-    return icon;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -60,7 +47,7 @@ class _ChoreCardState extends State<ChoreCard> {
       children: [
         ListTile(
           leading: IconButton(
-            icon: getDoneIcon(),
+            icon: DoneIndicator(done: getCurrentChore().done),
             onPressed: toggleChore,
           ),
           title: Text(

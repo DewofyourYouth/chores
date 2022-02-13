@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:chores/database/models/chore_day.dart';
-import 'package:chores/database/models/chore_log.dart';
 import 'package:chores/secrets.dart';
 import 'package:chores/components/chores/utils.dart';
 import 'package:chores/utils/dates.dart';
@@ -18,7 +17,6 @@ Future<DbCollection> getCollection(String collectionName) async {
 
 Future<List<Kid>> getKidsMongo() async {
   var kidsCollection = await getCollection('kids');
-  // DbCollection kidsCollection = DbCollection(db, 'kids');
   var kids = await kidsCollection.find().toList();
   List<Kid> kidList = [];
   for (var kid in kids) {
@@ -28,7 +26,6 @@ Future<List<Kid>> getKidsMongo() async {
         dailyPoints: kid['dailyPoints'],
         alternatingPoints: kid['alternatingPoints']);
     initializeChores(kid['name'], getDay());
-    log(k.toString());
     kidList.add(k);
   }
   return kidList;
@@ -44,16 +41,13 @@ void updateChore(ChoreDay chore) async {
   if (cDay != null) {
     await choreDayCollection.replaceOne({"_id": choreDayId}, chore.toMap());
   }
-  log("Logging chore");
   await choreDayCollection.insertOne(chore.toMap());
-  log("${chore.toString()} logged");
 }
 
 void initializeChores(String kidName, DateTime date) async {
   var choreDay = initializeChoreDay(kidName, date);
   var choreCollection = await getCollection('chores');
   choreCollection.insertOne(choreDay.toMap());
-  log("logged ${choreDay.toString()}");
 }
 
 Future<ChoreDay> getChores(String kidName, DateTime date) async {
