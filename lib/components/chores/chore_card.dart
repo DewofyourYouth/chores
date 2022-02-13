@@ -26,7 +26,7 @@ class _ChoreCardState extends State<ChoreCard> {
       done = !done;
     });
     log("marking chore as ${done ? 'done' : 'not done'}");
-    ChoreLog choreLog = ChoreLog(
+    var choreLog = ChoreLog(
         calendarDay: getDay(),
         kidName: widget.name,
         chore: widget.chore,
@@ -64,8 +64,16 @@ class _ChoreCardState extends State<ChoreCard> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            TextButton(child: const Text("Done"), onPressed: toggleChore),
-            TextButton(onPressed: toggleChore, child: const Text("Not Done"))
+            TextButton(
+                child: const Text("Done"),
+                onPressed: () => {
+                      if (!done) {toggleChore()}
+                    }),
+            TextButton(
+                onPressed: () => {
+                      if (done) {toggleChore()}
+                    },
+                child: const Text("Not Done"))
           ],
         )
       ],

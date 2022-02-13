@@ -45,7 +45,9 @@ FutureBuilder getMongoKidsWidgets() {
           );
         }
         if (snapshot.hasError) {
-          return Text("Error: ${snapshot.error}");
+          return Text(
+            "Error: ${snapshot.error}",
+          );
         }
         if (snapshot.hasData) {
           return Wrap(
@@ -58,12 +60,14 @@ FutureBuilder getMongoKidsWidgets() {
 }
 
 void insertChore(ChoreLog chore) async {
+  String choreLogId =
+      createChoreLogId(chore.calendarDay, chore.kidName, chore.chore);
   var choreLogCollection = await getCollection('chore-log');
+  var cLog = await choreLogCollection.findOne({"_id": choreLogId});
+  if (cLog != null) {
+    await choreLogCollection.replaceOne({"_id": choreLogId}, chore.toMap());
+  }
   log("Logging chore");
-  await choreLogCollection.updateOne(
-      where.eq('_id',
-          createChoreLogId(chore.calendarDay, chore.kidName, chore.chore)),
-      modify.set("done", chore.isDone),
-      upsert: true);
+  await choreLogCollection.insertOne(chore.toMap());
   log("${chore.toString()} logged");
 }
