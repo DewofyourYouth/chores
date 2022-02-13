@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:chores/components/kids/kid_card.dart';
 import 'package:chores/database/models/chore_log.dart';
 import 'package:chores/secrets.dart';
+import 'package:chores/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
@@ -59,6 +60,10 @@ FutureBuilder getMongoKidsWidgets() {
 void insertChore(ChoreLog chore) async {
   var choreLogCollection = await getCollection('chore-log');
   log("Logging chore");
-  await choreLogCollection.insertAll([chore.toMap()]);
+  await choreLogCollection.updateOne(
+      where.eq('_id',
+          createChoreLogId(chore.calendarDay, chore.kidName, chore.chore)),
+      modify.set("done", chore.isDone),
+      upsert: true);
   log("${chore.toString()} logged");
 }

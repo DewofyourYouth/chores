@@ -1,6 +1,8 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'dart:convert';
 
+import 'package:chores/utils/utils.dart';
+
 class ChoreLog {
   DateTime calendarDay;
   String kidName;
@@ -35,8 +37,7 @@ class ChoreLog {
 
   Map<String, dynamic> toMap() {
     return {
-      '_id':
-          "${calendarDay.toString()}:$kidName:${chore.split(' ').map((s) => s.trim()).join('')}",
+      '_id': createChoreLogId(calendarDay, kidName, chore),
       'calendarDay': calendarDay,
       'kidName': kidName,
       'chore': chore,

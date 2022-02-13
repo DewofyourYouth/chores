@@ -21,18 +21,11 @@ class ChoreCard extends StatefulWidget {
 class _ChoreCardState extends State<ChoreCard> {
   bool done = false;
 
-  void toggleDone() {
+  void toggleChore() {
     setState(() {
       done = !done;
     });
-  }
-
-  void markChoreAsDone() {
-    log("marking as done");
-    setState(() {
-      done = true;
-    });
-    DateTime now = DateTime.now();
+    log("marking chore as ${done ? 'done' : 'not done'}");
     ChoreLog choreLog = ChoreLog(
         calendarDay: getDay(),
         kidName: widget.name,
@@ -45,14 +38,14 @@ class _ChoreCardState extends State<ChoreCard> {
   IconButton getDoneIcon() => !done
       ? IconButton(
           icon: const Icon(Icons.radio_button_unchecked),
-          onPressed: toggleDone,
+          onPressed: toggleChore,
         )
       : IconButton(
           icon: const Icon(
             Icons.check_circle,
             color: Colors.green,
           ),
-          onPressed: toggleDone,
+          onPressed: toggleChore,
         );
 
   @override
@@ -71,9 +64,8 @@ class _ChoreCardState extends State<ChoreCard> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            TextButton(child: const Text("Done"), onPressed: markChoreAsDone),
-            TextButton(
-                onPressed: markChoreAsDone, child: const Text("Not Done"))
+            TextButton(child: const Text("Done"), onPressed: toggleChore),
+            TextButton(onPressed: toggleChore, child: const Text("Not Done"))
           ],
         )
       ],
