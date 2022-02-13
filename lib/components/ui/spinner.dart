@@ -13,26 +13,31 @@ class PianoSpinner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     log(spinnerMsg);
-    return SizedBox(
-      height: 1,
-      child: Column(
-        children: [
-          const Padding(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const Expanded(
+          flex: 2,
+          child: Padding(
             padding: EdgeInsets.fromLTRB(0, 40.0, 0, 20.0),
             child: SpinKitPianoWave(
               color: Colors.deepPurple,
-              size: 200.0,
+              size: 100.0,
             ),
           ),
-          Padding(
+        ),
+        Expanded(
+          flex: 1,
+          child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
               spinnerMsg,
               style: const TextStyle(fontFamily: "RobotoSlab"),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
