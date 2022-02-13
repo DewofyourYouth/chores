@@ -34,37 +34,19 @@ Future<List<Kid>> getKidsMongo() async {
   return kidList;
 }
 
-void insertChore(ChoreLog chore) async {
-  String choreLogId =
-      createChoreLogId(chore.calendarDay, chore.kidName, chore.chore);
-  var choreLogCollection = await getCollection('chore-log');
-  var cLog = await choreLogCollection.findOne({"_id": choreLogId});
-  if (cLog != null) {
-    await choreLogCollection.replaceOne({"_id": choreLogId}, chore.toMap());
+void updateChore(ChoreDay chore) async {
+  String choreDayId = createChoreDayId(
+    chore.kidName,
+    getDay(),
+  );
+  var choreDayCollection = await getCollection('chores');
+  var cDay = await choreDayCollection.findOne({"_id": choreDayId});
+  if (cDay != null) {
+    await choreDayCollection.replaceOne({"_id": choreDayId}, chore.toMap());
   }
   log("Logging chore");
-  await choreLogCollection.insertOne(chore.toMap());
+  await choreDayCollection.insertOne(chore.toMap());
   log("${chore.toString()} logged");
-}
-
-Future<List<ChoreLog>> getChoreLogs(DateTime date, String kidName) async {
-  var choreLogCollection = await getCollection('chore-log');
-  var choreLogs = await choreLogCollection
-      .find({'kidName': kidName, "calendarDay": date}).toList();
-  List<ChoreLog> clList = [];
-  for (var cl in choreLogs) {
-    var choreLog = ChoreLog(
-      calendarDay: cl["calendarDay"],
-      kidName: cl["kidName"],
-      chore: cl['chore'],
-      isDone: cl['isDone'],
-      isAlternating: cl['isAlternating'],
-    );
-
-    log(choreLog.toString());
-    clList.add(choreLog);
-  }
-  return clList;
 }
 
 void initializeChores(String kidName, DateTime date) async {
@@ -81,8 +63,3 @@ Future<ChoreDay> getChores(String kidName, DateTime date) async {
   log(choreMap.toString());
   return ChoreDay.fromMap(choreMap!);
 }
-
-// void main() async {
-//   var chores = getChores("Eliyahu", DateTime.now());
-//   log(chores.toString());
-// }

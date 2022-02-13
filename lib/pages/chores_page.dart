@@ -32,14 +32,11 @@ FutureBuilder kidsChoreBuilder(DateTime date, String kidName) {
       future: getChores(kidName, date),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
-            appBar: AppBar(title: const Text("Chores Page")),
-            body: ListView(children: const [
-              PianoSpinner(
-                spinnerMsg: "Fetching your chores!",
-              ),
-            ]),
-          );
+          return ListView(children: const [
+            PianoSpinner(
+              spinnerMsg: "Fetching your chores!",
+            ),
+          ]);
         }
         if (snapshot.hasError) {
           return Text(

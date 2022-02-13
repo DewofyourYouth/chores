@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../database/models/chore_day.dart';
 
-class ChoreCard extends StatelessWidget {
+class ChoreCard extends StatefulWidget {
   final String chore;
   final ChoreDay chores;
   final String name;
@@ -18,34 +18,44 @@ class ChoreCard extends StatelessWidget {
     required this.chores,
   }) : super(key: key);
 
-  void toggleChore() {
-    // log("marking chore as ${done ? 'done' : 'not done'}");
-    var cl = chores.chores;
-    var currentChore = cl[cl.indexWhere((element) => element.chore == chore)];
-    log(currentChore.done.toString());
-    currentChore.done = !done;
-    // var choreLog = ChoreLog(
-    //     calendarDay: getDay(),
-    //     kidName: name,
-    //     chore: chore,
-    //     isDone: done,
-    //     isAlternating: false);
-    log(chores.toString());
-    insertChore(chores);
+  @override
+  State<ChoreCard> createState() => _ChoreCardState();
+}
+
+class _ChoreCardState extends State<ChoreCard> {
+  bool localDone = false;
+  Chore getCurrentChore() {
+    var cl = widget.chores.chores;
+    return cl[cl.indexWhere((element) => element.chore == widget.chore)];
   }
 
-  IconButton getDoneIcon() => !done
-      ? IconButton(
-          icon: const Icon(Icons.radio_button_unchecked),
-          onPressed: toggleChore,
-        )
-      : IconButton(
-          icon: const Icon(
-            Icons.check_circle,
-            color: Colors.green,
-          ),
-          onPressed: toggleChore,
-        );
+  void toggleChore() {
+    var currentChore = getCurrentChore();
+    currentChore.done = !widget.done;
+    setState(() {
+      localDone = currentChore.done;
+    });
+    log("marking ${currentChore.chore} as ${currentChore.done ? 'done' : 'not done'}");
+    updateChore(widget.chores);
+  }
+
+  IconButton getDoneIcon() {
+    setState(() {
+      localDone = getCurrentChore().done;
+    });
+    return !localDone
+        ? IconButton(
+            icon: const Icon(Icons.radio_button_unchecked),
+            onPressed: toggleChore,
+          )
+        : IconButton(
+            icon: const Icon(
+              Icons.check_circle,
+              color: Colors.green,
+            ),
+            onPressed: toggleChore,
+          );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +66,7 @@ class ChoreCard extends StatelessWidget {
         ListTile(
           leading: getDoneIcon(),
           title: Text(
-            chore,
+            widget.chore,
             style: const TextStyle(fontFamily: "RobotoSlab"),
           ),
         ),
@@ -66,11 +76,11 @@ class ChoreCard extends StatelessWidget {
             TextButton(
                 child: const Text("Done"),
                 onPressed: () => {
-                      if (!done) {toggleChore()}
+                      if (!widget.done) {toggleChore()}
                     }),
             TextButton(
                 onPressed: () => {
-                      if (done) {toggleChore()}
+                      if (widget.done) {toggleChore()}
                     },
                 child: const Text("Not Done"))
           ],

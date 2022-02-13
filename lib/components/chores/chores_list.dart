@@ -38,6 +38,7 @@ class ChoresList extends StatelessWidget {
             color: Colors.blue,
             child: Center(
               child: ChoreCard(
+                chores: chores,
                 chore: c.chore,
                 name: name,
                 done: c.done,

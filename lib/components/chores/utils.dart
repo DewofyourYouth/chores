@@ -21,6 +21,6 @@ String createChoreLogId(DateTime date, String kidName, String chore) {
 
 String createChoreDayId(String kidName, DateTime date) {
   var fmtDate = dateFormatter(date);
-  var kid = kidName.toLowerCase();
+  var kid = choreFormatter(kidName);
   return "$fmtDate:$kid";
 }
