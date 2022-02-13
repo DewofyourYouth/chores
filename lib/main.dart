@@ -1,6 +1,9 @@
 import 'package:chores/database/queries.dart';
 import 'package:flutter/material.dart';
 
+import 'components/kids/kid_card.dart';
+import 'components/ui/spinner.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -78,4 +81,29 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+FutureBuilder getMongoKidsWidgets() {
+  var kids = getKidsMongo();
+  return FutureBuilder(
+      future: kids,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const PianoSpinner(
+            spinnerMsg: "Fetching your kids! (From MongoDB)",
+          );
+        }
+        if (snapshot.hasError) {
+          return Text(
+            "Error: ${snapshot.error}",
+          );
+        }
+        if (snapshot.hasData) {
+          return Wrap(
+            children: [...snapshot.data.map((k) => KidCard(kid: k))],
+          );
+        } else {
+          return const Text("Howdy");
+        }
+      });
 }

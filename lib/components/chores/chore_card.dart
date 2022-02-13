@@ -5,31 +5,23 @@ import 'package:chores/database/queries.dart';
 import 'package:chores/utils/dates.dart';
 import 'package:flutter/material.dart';
 
-class ChoreCard extends StatefulWidget {
+class ChoreCard extends StatelessWidget {
   final String chore;
   final String name;
+  final bool done;
   const ChoreCard({
     Key? key,
     required this.chore,
     required this.name,
+    required this.done,
   }) : super(key: key);
 
-  @override
-  State<ChoreCard> createState() => _ChoreCardState();
-}
-
-class _ChoreCardState extends State<ChoreCard> {
-  bool done = false;
-
   void toggleChore() {
-    setState(() {
-      done = !done;
-    });
     log("marking chore as ${done ? 'done' : 'not done'}");
     var choreLog = ChoreLog(
         calendarDay: getDay(),
-        kidName: widget.name,
-        chore: widget.chore,
+        kidName: name,
+        chore: chore,
         isDone: done,
         isAlternating: false);
     insertChore(choreLog);
@@ -57,7 +49,7 @@ class _ChoreCardState extends State<ChoreCard> {
         ListTile(
           leading: getDoneIcon(),
           title: Text(
-            widget.chore,
+            chore,
             style: const TextStyle(fontFamily: "RobotoSlab"),
           ),
         ),

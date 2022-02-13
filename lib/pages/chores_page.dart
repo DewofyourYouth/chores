@@ -1,9 +1,13 @@
+// import 'package:chores/database/models/chore_day.dart';
+import 'package:chores/utils/dates.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-import '../components/chores/chore_card.dart';
+import '../components/chores/chores_list.dart';
 import '../components/kids/kid_card.dart';
-import '../constants.dart';
+import '../components/ui/spinner.dart';
+import '../database/queries.dart';
+
+//
 
 class KidsChoresPage extends StatelessWidget {
   final Data data;
@@ -11,42 +15,42 @@ class KidsChoresPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String name = data.name;
-    final now = DateTime.now();
+    var kidName = data.name;
+    var date = getDay();
     return Scaffold(
-      appBar: AppBar(
-        title: Text("$name Chores Page"),
-      ),
-      // ignore: prefer_const_literals_to_create_immutables
-      body: Center(
-        child: ListView(
-          padding: const EdgeInsets.all(8),
-          scrollDirection: Axis.vertical,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 15.0),
-              child: Center(
-                child: Text(
-                  "Chores for ${DateFormat("EEEE, MMM d").format(now)}:",
-                  style: const TextStyle(
-                    fontFamily: "RobotoSlab",
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ),
-            ...daiyChores.map((c) => Container(
-                color: Colors.blue,
-                child: Center(
-                  child: ChoreCard(
-                    chore: c,
-                    name: name,
-                  ),
-                )))
-          ],
+        appBar: AppBar(
+          title: Text("$kidName Chores Page"),
         ),
-      ),
-    );
+        body: Center(
+          child: kidsChoreBuilder(date, kidName),
+        ));
   }
 }
-//
+
+FutureBuilder kidsChoreBuilder(DateTime date, String kidName) {
+  return FutureBuilder(
+      future: getChores(kidName, date),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            appBar: AppBar(title: const Text("Chores Page")),
+            body: ListView(children: const [
+              PianoSpinner(
+                spinnerMsg: "Fetching your chores!",
+              ),
+            ]),
+          );
+        }
+        if (snapshot.hasError) {
+          return Text(
+            "Error: ${snapshot.error}",
+          );
+        }
+        if (snapshot.hasData) {
+          return ChoresList(
+              now: DateTime.now(), chores: snapshot.data, name: kidName);
+        } else {
+          return const Text("Howdy");
+        }
+      });
+}
