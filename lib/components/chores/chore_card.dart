@@ -1,12 +1,13 @@
 import 'dart:developer';
 
-import 'package:chores/database/models/chore_log.dart';
 import 'package:chores/database/queries.dart';
-import 'package:chores/utils/dates.dart';
 import 'package:flutter/material.dart';
+
+import '../../database/models/chore_day.dart';
 
 class ChoreCard extends StatelessWidget {
   final String chore;
+  final ChoreDay chores;
   final String name;
   final bool done;
   const ChoreCard({
@@ -14,17 +15,23 @@ class ChoreCard extends StatelessWidget {
     required this.chore,
     required this.name,
     required this.done,
+    required this.chores,
   }) : super(key: key);
 
   void toggleChore() {
-    log("marking chore as ${done ? 'done' : 'not done'}");
-    var choreLog = ChoreLog(
-        calendarDay: getDay(),
-        kidName: name,
-        chore: chore,
-        isDone: done,
-        isAlternating: false);
-    insertChore(choreLog);
+    // log("marking chore as ${done ? 'done' : 'not done'}");
+    var cl = chores.chores;
+    var currentChore = cl[cl.indexWhere((element) => element.chore == chore)];
+    log(currentChore.done.toString());
+    currentChore.done = !done;
+    // var choreLog = ChoreLog(
+    //     calendarDay: getDay(),
+    //     kidName: name,
+    //     chore: chore,
+    //     isDone: done,
+    //     isAlternating: false);
+    log(chores.toString());
+    insertChore(chores);
   }
 
   IconButton getDoneIcon() => !done
