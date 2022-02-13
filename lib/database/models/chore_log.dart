@@ -1,7 +1,7 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'dart:convert';
 
-import 'package:chores/utils/utils.dart';
+import 'package:chores/components/chores/utils.dart';
 
 class ChoreLog {
   DateTime calendarDay;

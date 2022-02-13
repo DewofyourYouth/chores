@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:chores/components/kids/kid_card.dart';
 import 'package:chores/database/models/chore_log.dart';
 import 'package:chores/secrets.dart';
-import 'package:chores/utils/utils.dart';
+import 'package:chores/components/chores/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:mongo_dart/mongo_dart.dart';
 
