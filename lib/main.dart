@@ -1,5 +1,9 @@
+import 'package:chores/components/chores/utils.dart';
 import 'package:chores/database/queries.dart';
+import 'package:chores/utils/dates.dart';
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'components/kids/kid_card.dart';
 import 'components/ui/spinner.dart';
@@ -43,7 +47,15 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<String> kids = [];
   final myController = TextEditingController();
-  final FutureBuilder kidsFuture = getMongoKidsWidgets();
+  DateTime date = DateTime.now();
+  FutureBuilder kidsFuture = getMongoKidsWidgets(null);
+
+  void decrementDate() {
+    setState(() {
+      date = date.subtract(const Duration(days: 1));
+      kidsFuture = getMongoKidsWidgets(date);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-FutureBuilder getMongoKidsWidgets() {
+FutureBuilder getMongoKidsWidgets(DateTime? date) {
+  date ??= DateTime.now();
+  // String dateStr = formatDate(date, [DateFormat.EEEE(), "-", mm, "-", dd]);
+  var dateStr = weekdayMonthDayYear.format(date);
   var kids = getKidsMongo();
   return FutureBuilder(
       future: kids,
@@ -80,7 +95,18 @@ FutureBuilder getMongoKidsWidgets() {
         }
         if (snapshot.hasData) {
           return ListView(
-            children: [...snapshot.data.map((k) => KidCard(kid: k))],
+            children: [
+              Center(
+                  child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  dateStr,
+                  style:
+                      const TextStyle(fontFamily: "RobotoSlab", fontSize: 30.0),
+                ),
+              )),
+              ...snapshot.data.map((k) => KidCard(kid: k, date: date!))
+            ],
           );
         } else {
           return const Text("Howdy");

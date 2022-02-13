@@ -5,20 +5,23 @@ import '../../database/models/kid.dart';
 
 class Data {
   String name;
+  DateTime date;
 
-  Data({required this.name});
+  Data({required this.name, required this.date});
 }
 
 class KidCard extends StatelessWidget {
   KidCard({
     required this.kid,
+    required this.date,
   }) : super(key: ObjectKey(kid));
   final Kid kid;
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
     var white = Colors.white;
-    var data = Data(name: kid.name);
+    var data = Data(name: kid.name, date: date);
     return Card(
       child: Column(
         mainAxisSize: MainAxisSize.min,
