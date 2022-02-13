@@ -60,6 +60,5 @@ Future<ChoreDay> getChores(String kidName, DateTime date) async {
   String choreId = createChoreDayId(kidName, date);
   var choreDayCollection = await getCollection('chores');
   var choreMap = await choreDayCollection.findOne({"_id": choreId});
-  log(choreMap.toString());
   return ChoreDay.fromMap(choreMap!);
 }

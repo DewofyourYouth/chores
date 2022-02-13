@@ -9,12 +9,12 @@ class ChoreCard extends StatefulWidget {
   final String chore;
   final ChoreDay chores;
   final String name;
-  final bool done;
+  // final bool done;
   const ChoreCard({
     Key? key,
     required this.chore,
     required this.name,
-    required this.done,
+    // required this.done,
     required this.chores,
   }) : super(key: key);
 
@@ -23,7 +23,7 @@ class ChoreCard extends StatefulWidget {
 }
 
 class _ChoreCardState extends State<ChoreCard> {
-  bool localDone = false;
+  bool done = false;
   Chore getCurrentChore() {
     var cl = widget.chores.chores;
     return cl[cl.indexWhere((element) => element.chore == widget.chore)];
@@ -31,30 +31,25 @@ class _ChoreCardState extends State<ChoreCard> {
 
   void toggleChore() {
     var currentChore = getCurrentChore();
-    currentChore.done = !widget.done;
     setState(() {
-      localDone = currentChore.done;
+      done = !currentChore.done;
     });
+    currentChore.done = done;
     log("marking ${currentChore.chore} as ${currentChore.done ? 'done' : 'not done'}");
     updateChore(widget.chores);
   }
 
-  IconButton getDoneIcon() {
-    setState(() {
-      localDone = getCurrentChore().done;
-    });
-    return !localDone
-        ? IconButton(
-            icon: const Icon(Icons.radio_button_unchecked),
-            onPressed: toggleChore,
-          )
-        : IconButton(
-            icon: const Icon(
-              Icons.check_circle,
-              color: Colors.green,
-            ),
-            onPressed: toggleChore,
-          );
+  Icon getDoneIcon() {
+    Icon icon;
+    if (!getCurrentChore().done) {
+      icon = const Icon(Icons.radio_button_unchecked);
+    } else {
+      icon = const Icon(
+        Icons.check_circle,
+        color: Colors.green,
+      );
+    }
+    return icon;
   }
 
   @override
@@ -64,7 +59,10 @@ class _ChoreCardState extends State<ChoreCard> {
       mainAxisSize: MainAxisSize.min,
       children: [
         ListTile(
-          leading: getDoneIcon(),
+          leading: IconButton(
+            icon: getDoneIcon(),
+            onPressed: toggleChore,
+          ),
           title: Text(
             widget.chore,
             style: const TextStyle(fontFamily: "RobotoSlab"),
@@ -76,11 +74,11 @@ class _ChoreCardState extends State<ChoreCard> {
             TextButton(
                 child: const Text("Done"),
                 onPressed: () => {
-                      if (!widget.done) {toggleChore()}
+                      if (!done) {toggleChore()}
                     }),
             TextButton(
                 onPressed: () => {
-                      if (widget.done) {toggleChore()}
+                      if (done) {toggleChore()}
                     },
                 child: const Text("Not Done"))
           ],

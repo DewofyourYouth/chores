@@ -41,7 +41,6 @@ class ChoresList extends StatelessWidget {
                 chores: chores,
                 chore: c.chore,
                 name: name,
-                done: c.done,
               ),
             )))
       ],
