@@ -1,12 +1,7 @@
-import 'package:chores/components/chores/utils.dart';
-import 'package:chores/database/queries.dart';
 import 'package:chores/utils/dates.dart';
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-import 'components/kids/kid_card.dart';
-import 'components/ui/spinner.dart';
+import 'components/kids/get_kids_from_datebase.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,15 +24,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -52,7 +38,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void decrementDate() {
     setState(() {
-      date = date.subtract(const Duration(days: 1));
+      date = date.addDays(-1);
+      kidsFuture = getMongoKidsWidgets(date);
+    });
+  }
+
+  void incrementDate() {
+    setState(() {
+      date = date.addDays(1);
       kidsFuture = getMongoKidsWidgets(date);
     });
   }
@@ -73,43 +66,4 @@ class _MyHomePageState extends State<MyHomePage> {
       // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-}
-
-FutureBuilder getMongoKidsWidgets(DateTime? date) {
-  date ??= DateTime.now();
-  // String dateStr = formatDate(date, [DateFormat.EEEE(), "-", mm, "-", dd]);
-  var dateStr = weekdayMonthDayYear.format(date);
-  var kids = getKidsMongo();
-  return FutureBuilder(
-      future: kids,
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const PianoSpinner(
-            spinnerMsg: "Fetching your kids! (From MongoDB)",
-          );
-        }
-        if (snapshot.hasError) {
-          return Text(
-            "Error: ${snapshot.error}",
-          );
-        }
-        if (snapshot.hasData) {
-          return ListView(
-            children: [
-              Center(
-                  child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  dateStr,
-                  style:
-                      const TextStyle(fontFamily: "RobotoSlab", fontSize: 30.0),
-                ),
-              )),
-              ...snapshot.data.map((k) => KidCard(kid: k, date: date!))
-            ],
-          );
-        } else {
-          return const Text("Howdy");
-        }
-      });
 }
