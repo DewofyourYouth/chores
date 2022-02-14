@@ -1,7 +1,7 @@
 const alternatingChores = [
   "Clear table",
   "Clear couch +",
-  "Sweep and clear floor"
+  "Sweep and clear {} floor"
 ];
 
 const daiyChores = [

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:chores/database/queries.dart';
 import 'package:flutter/material.dart';
 
+import '../../database/models/chore.dart';
 import '../../database/models/chore_day.dart';
 import '../ui/done_indicator.dart';
 
