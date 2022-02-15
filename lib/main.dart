@@ -15,7 +15,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData.dark(),
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        fontFamily: "OpenSans",
+        textTheme: const TextTheme(
+            headline4: TextStyle(
+          fontFamily: 'RobotoSlab',
+          color: Color(0xff64ffda),
+        )),
+      ),
       home: const MyHomePage(title: 'Kid\'s Home Page'),
     );
   }

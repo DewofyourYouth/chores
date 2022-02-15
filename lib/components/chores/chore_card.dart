@@ -42,17 +42,23 @@ class _ChoreCardState extends State<ChoreCard> {
 
   @override
   Widget build(BuildContext context) {
-    var textColor = widget.chore.isAlternating ? Colors.yellow : Colors.white;
     return Card(
+        color: widget.chore.isAlternating ? Colors.blueGrey : Colors.grey[600],
         child: ListTile(
-      leading: IconButton(
-        icon: DoneIndicator(done: getCurrentChore().done),
-        onPressed: toggleChore,
-      ),
-      title: Text(
-        widget.chore.chore,
-        style: TextStyle(fontFamily: "RobotoSlab", color: textColor),
-      ),
-    ));
+          leading: IconButton(
+            icon: DoneIndicator(done: getCurrentChore().done),
+            onPressed: toggleChore,
+          ),
+          title: Text(
+            widget.chore.chore,
+            style: TextStyle(
+                fontFamily: "RobotoSlab",
+                fontWeight: widget.chore.isAlternating
+                    ? FontWeight.bold
+                    : FontWeight.normal,
+                color:
+                    widget.chore.isAlternating ? Colors.yellow : Colors.white),
+          ),
+        ));
   }
 }

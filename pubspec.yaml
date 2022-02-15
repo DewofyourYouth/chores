@@ -81,9 +81,12 @@ flutter:
   fonts:
     - family: RobotoSlab
       fonts:
-        - asset: fonts/RobotoSlab-Black.ttf
-        - asset: fonts/RobotoSlab-Bold.ttf
-  
+        - asset: fonts/RobotoSlab/RobotoSlab-Black.ttf
+        - asset: fonts/RobotoSlab/RobotoSlab-Bold.ttf
+        - asset: fonts/RobotoSlab/RobotoSlab-Regular.ttf
+    - family: OpenSans
+      fonts:
+        - asset: fonts/OpenSans/OpenSans-Regular.ttf
   
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
