@@ -16,14 +16,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        brightness: Brightness.dark,
-        fontFamily: "OpenSans",
-        textTheme: const TextTheme(
+          brightness: Brightness.dark,
+          fontFamily: "OpenSans",
+          textTheme: const TextTheme(
             headline4: TextStyle(
-          fontFamily: 'RobotoSlab',
-          color: Color(0xff64ffda),
-        )),
-      ),
+              fontFamily: 'RobotoSlab',
+              color: Colors.tealAccent,
+            ),
+          ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.teal,
+          )),
       home: const MyHomePage(title: 'Kid\'s Home Page'),
     );
   }

@@ -20,7 +20,6 @@ class KidCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var white = Colors.white;
     var data = Data(name: kid.name, date: date);
     return Card(
       child: Column(
@@ -30,30 +29,35 @@ class KidCard extends StatelessWidget {
           ListTile(
             leading: const Icon(
               Icons.child_care,
-              color: Color(0xff64ffda),
+              color: Colors.tealAccent,
             ),
             title: Text(
               kid.name,
               style: Theme.of(context).textTheme.headline4,
             ),
+            // isThreeLine: true,
             subtitle: Padding(
               padding: const EdgeInsets.fromLTRB(0, 8.0, 8.0, 8.0),
-              child: Text(
-                  "Alternating Points: ${kid.alternatingPoints}, Daily Points: ${kid.dailyPoints}, Total: ${kid.alternatingPoints + kid.dailyPoints}"),
+              child: Text("The daily chores for ${kid.name}."),
             ),
           ),
-          ElevatedButton.icon(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => KidsChoresPage(data: data)));
-            },
-            label: Text("Go to ${kid.name} page"),
-            icon: Icon(
-              Icons.navigate_next,
-              color: white,
-              size: 30.0,
+          Center(
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 10.0),
+              child: FloatingActionButton.extended(
+                heroTag: kid.name,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => KidsChoresPage(data: data)));
+                },
+                label: const Text("Chores"),
+                icon: const Icon(
+                  Icons.room_service_outlined,
+                  size: 30.0,
+                ),
+              ),
             ),
           )
         ],

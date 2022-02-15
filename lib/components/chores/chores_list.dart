@@ -19,7 +19,7 @@ class ChoresList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(20.0),
       scrollDirection: Axis.vertical,
       children: [
         Padding(
@@ -28,21 +28,20 @@ class ChoresList extends StatelessWidget {
             child: Text(
               "Chores for ${DateFormat("EEEE, MMM d").format(now)}:",
               style: const TextStyle(
+                color: Colors.lightBlueAccent,
                 fontFamily: "RobotoSlab",
                 fontSize: 20,
               ),
             ),
           ),
         ),
-        ...chores.chores.map((c) => Container(
-            color: Colors.blue,
-            child: Center(
+        ...chores.chores.map((c) => Center(
               child: ChoreCard(
                 chores: chores,
                 chore: c,
                 name: name,
               ),
-            )))
+            ))
       ],
     );
   }

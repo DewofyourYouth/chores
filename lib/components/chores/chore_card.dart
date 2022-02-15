@@ -42,8 +42,9 @@ class _ChoreCardState extends State<ChoreCard> {
 
   @override
   Widget build(BuildContext context) {
+    var alternating = widget.chore.isAlternating;
     return Card(
-        color: widget.chore.isAlternating ? Colors.blueGrey : Colors.grey[600],
+        color: !alternating ? Colors.grey[600] : Colors.blueGrey,
         child: ListTile(
           leading: IconButton(
             icon: DoneIndicator(done: getCurrentChore().done),
@@ -53,11 +54,8 @@ class _ChoreCardState extends State<ChoreCard> {
             widget.chore.chore,
             style: TextStyle(
                 fontFamily: "RobotoSlab",
-                fontWeight: widget.chore.isAlternating
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-                color:
-                    widget.chore.isAlternating ? Colors.yellow : Colors.white),
+                fontWeight: alternating ? FontWeight.bold : FontWeight.normal,
+                color: alternating ? Colors.yellow : Colors.white),
           ),
         ));
   }
