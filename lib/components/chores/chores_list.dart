@@ -45,7 +45,7 @@ class ChoresList extends StatelessWidget {
             ),
           ),
         ),
-        ScoreCard(score: chores.calculateDailyScore())
+        // ScoreCard(score: chores.calculateDailyScore())
       ],
     );
   }
