@@ -1,3 +1,4 @@
+import 'package:chores/components/chores/score_card.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -35,13 +36,16 @@ class ChoresList extends StatelessWidget {
             ),
           ),
         ),
-        ...chores.chores.map((c) => Center(
-              child: ChoreCard(
-                chores: chores,
-                chore: c,
-                name: name,
-              ),
-            ))
+        ...chores.chores.map(
+          (c) => Center(
+            child: ChoreCard(
+              chores: chores,
+              chore: c,
+              name: name,
+            ),
+          ),
+        ),
+        ScoreCard(score: chores.calculateDailyScore())
       ],
     );
   }

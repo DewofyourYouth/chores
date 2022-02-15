@@ -35,7 +35,7 @@ class KidCard extends StatelessWidget {
               kid.name,
               style: Theme.of(context).textTheme.headline4,
             ),
-            // isThreeLine: true,
+            isThreeLine: true,
             subtitle: Padding(
               padding: const EdgeInsets.fromLTRB(0, 8.0, 8.0, 8.0),
               child: Text("The daily chores for ${kid.name}."),
