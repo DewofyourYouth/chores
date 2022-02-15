@@ -1,4 +1,3 @@
-import 'package:chores/constants.dart';
 import 'package:intl/intl.dart';
 
 DateTime getDay() {
@@ -13,7 +12,16 @@ extension DatePresets on DateTime {
     return add(Duration(days: days));
   }
 
-  bool alternatingDay() {
-    return !daysOffAlternating.contains(DateFormat("EEEE").format(this));
+  bool isAlternatingDay() {
+    const daysOffAlternating = [DateTime.friday, DateTime.saturday];
+    return !daysOffAlternating.contains(weekday);
   }
+}
+
+int findLastDayInMonth(DateTime date) {
+  var isDecember = date.month == DateTime.december;
+  return DateTime(!isDecember ? date.year : date.year + 1,
+          !isDecember ? date.month + 1 : 1, 1)
+      .subtract(const Duration(days: 1))
+      .day;
 }

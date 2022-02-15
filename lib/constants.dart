@@ -1,7 +1,7 @@
 const alternatingChores = [
   "Clear table",
   "Clear couch +",
-  "Sweep and clear {} floor"
+  "Sweep and clear {room} floor"
 ];
 
 const daiyChores = [
@@ -13,4 +13,4 @@ const daiyChores = [
 
 const kids = ["Eliyahu", "Yosef", "Asher Yitzchok"];
 
-const daysOffAlternating = ["Friday", "Saturday"];
+// const daysOffAlternating = [DateTime.friday, DateTime.saturday];

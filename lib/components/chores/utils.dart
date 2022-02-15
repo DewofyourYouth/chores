@@ -1,7 +1,5 @@
 import 'package:date_format/date_format.dart';
 
-import '../../database/models/chore.dart';
-
 String choreFormatter(String chore) {
   return chore
       .split(" ")
@@ -24,9 +22,3 @@ String createChoreDayId(String kidName, DateTime date) {
   var kid = choreFormatter(kidName);
   return "$fmtDate:$kid";
 }
-
-// Map<String, Chore> getAlternatingChoreMap(DateTime date) {
-//   int wkDay = date.weekday;
-
-
-// }

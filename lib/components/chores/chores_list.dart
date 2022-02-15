@@ -39,7 +39,7 @@ class ChoresList extends StatelessWidget {
             child: Center(
               child: ChoreCard(
                 chores: chores,
-                chore: c.chore,
+                chore: c,
                 name: name,
               ),
             )))

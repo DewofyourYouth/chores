@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:chores/utils/dates.dart';
+import 'package:chores/utils/strings.dart';
+import 'package:chores/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:chores/components/chores/utils.dart';
@@ -81,6 +84,36 @@ ChoreDay initializeChoreDay(String kidName, DateTime date) {
   var chores = daiyChores
       .map((c) => Chore(chore: c, done: false, isAlternating: false))
       .toList();
+  var altMap = createDailyAlternating(date);
+  if (altMap.isNotEmpty) {
+    chores.add(Chore(
+        chore: createDailyAlternating(date)[kidName],
+        done: false,
+        isAlternating: true));
+  }
+  log(chores.toString());
   var id = createChoreDayId(kidName, date);
   return ChoreDay(id: id, kidName: kidName, date: date, chores: chores);
+}
+
+Map<dynamic, dynamic> createDailyAlternating(DateTime date) {
+  if (!date.isAlternatingDay()) {
+    return {};
+  }
+  var wkDay = date.weekday;
+  var monthWeek = (date.day / 7).floor();
+  var rotateOffset = wkDay + monthWeek;
+  var room = rotateOffset % 2 == 0 ? 'kitchen' : 'living room';
+  var rAlternatingChores = rotateList(
+      alternatingChores
+          .map((chore) => chore.contains("{room}")
+              ? chore.formatWithMap({"room": room})
+              : chore)
+          .toList(),
+      rotateOffset);
+  var m = {};
+  for (int i = 0; i < kids.length; i++) {
+    m[kids[i]] = rAlternatingChores[i];
+  }
+  return m;
 }
