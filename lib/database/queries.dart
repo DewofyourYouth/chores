@@ -56,3 +56,10 @@ Future<ChoreDay> getChores(String kidName, DateTime date) async {
   var choreMap = await choreDayCollection.findOne({"_id": choreId});
   return ChoreDay.fromMap(choreMap!);
 }
+
+Future<List<ChoreDay>> getAllChoreDays() async {
+  var choreDayCollection = await getCollection('chores');
+  var choresList =
+      choreDayCollection.find().map((data) => ChoreDay.fromMap(data)).toList();
+  return choresList;
+}

@@ -44,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<String> kids = [];
   final myController = TextEditingController();
   DateTime date = DateTime.now();
-  FutureBuilder kidsFuture = getMongoKidsWidgets(null);
+  FutureBuilder kidsFuture = getMongoKidsWidgets(DateTime.now());
 
   void decrementDate() {
     setState(() {

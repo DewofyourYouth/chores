@@ -39,6 +39,7 @@ class ChoreDay {
   ChoreDay copyWith({
     String? id,
     String? kidName,
+    DateTime? date,
     List<Chore>? chores,
   }) {
     return ChoreDay(

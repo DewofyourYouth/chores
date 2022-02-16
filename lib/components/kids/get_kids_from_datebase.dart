@@ -5,8 +5,7 @@ import '../../utils/dates.dart';
 import '../ui/spinner.dart';
 import 'kid_card.dart';
 
-FutureBuilder getMongoKidsWidgets(DateTime? date) {
-  date ??= DateTime.now();
+FutureBuilder getMongoKidsWidgets(DateTime date) {
   var dateStr = weekdayMonthDayYear.format(date);
   var kids = getKidsMongo();
   return FutureBuilder(
@@ -34,7 +33,7 @@ FutureBuilder getMongoKidsWidgets(DateTime? date) {
                       const TextStyle(fontFamily: "RobotoSlab", fontSize: 30.0),
                 ),
               )),
-              ...snapshot.data.map((k) => KidCard(kid: k, date: date!))
+              ...snapshot.data.map((k) => KidCard(kid: k, date: date))
             ],
           );
         } else {
