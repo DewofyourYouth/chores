@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import '../../database/queries.dart';
@@ -22,6 +24,7 @@ FutureBuilder getMongoKidsWidgets(DateTime date) {
           );
         }
         if (snapshot.hasData) {
+          log(snapshot.data.toString());
           return ListView(
             children: [
               Center(

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:chores/utils/dates.dart';
 import 'package:chores/utils/strings.dart';
@@ -104,7 +103,7 @@ ChoreDay initializeChoreDay(String kidName, DateTime date) {
         done: false,
         isAlternating: true));
   }
-  log(chores.toString());
+  // log(chores.toString());
   var id = createChoreDayId(kidName, date);
   return ChoreDay(id: id, kidName: kidName, date: date, chores: chores);
 }
