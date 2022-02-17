@@ -63,3 +63,4 @@ Future<List<ChoreDay>> getAllChoreDays() async {
       choreDayCollection.find().map((data) => ChoreDay.fromMap(data)).toList();
   return choresList;
 }
+
