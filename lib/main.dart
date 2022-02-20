@@ -1,5 +1,6 @@
 import 'package:chores/utils/dates.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'components/kids/get_kids_from_datebase.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Chores App',
       theme: ThemeData(
           brightness: Brightness.dark,
           fontFamily: "OpenSans",
@@ -46,10 +47,20 @@ class _MyHomePageState extends State<MyHomePage> {
   DateTime date = DateTime.now();
   FutureBuilder kidsFuture = getMongoKidsWidgets(DateTime.now());
 
+  void resetDate() {
+    setState(() {
+      date = DateTime.now();
+      kidsFuture = getMongoKidsWidgets(date);
+    });
+  }
+
   void decrementDate() {
     setState(() {
       date = date.addDays(-1);
       kidsFuture = getMongoKidsWidgets(date);
+      // final snackBar =
+      //     SnackBar(content: Text(weekdayMonthDayYear.format(date)));
+      // ScaffoldMessenger.of(context).showSnackBar(snackBar);
     });
   }
 
@@ -63,17 +74,66 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: kidsFuture,
-
-      // We dont yet have the functionality to add a kid yet.
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: _addKid,
-      //   tooltip: 'Add Kid',
-      //   child: const Icon(Icons.add),
-      // ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: kidsFuture,
+        bottomNavigationBar: BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          color: Colors.tealAccent,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: decrementDate,
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
+                tooltip: "Previous Day",
+              ),
+              IconButton(
+                onPressed: resetDate,
+                icon: const Icon(
+                  Icons.refresh,
+                  color: Colors.black,
+                ),
+                tooltip: "Rest to current date",
+              ),
+              IconButton(
+                onPressed: incrementDate,
+                icon: const Icon(
+                  Icons.arrow_forward,
+                  color: Colors.black,
+                ),
+                tooltip: "Next Day",
+              )
+            ],
+          ),
+        ));
+    // bottomNavigationBar: Row(
+    //   mainAxisAlignment: MainAxisAlignment.center,
+    //   children: [
+    //     ElevatedButton.icon(
+    //         onPressed: decrementDate,
+    //         icon: const Icon(Icons.arrow_back),
+    //         label: const Text("Next Day")),
+    //     ElevatedButton.icon(
+    //         onPressed: resetDate,
+    //         icon: const Icon(Icons.refresh),
+    //         label: const Text("Current Day")),
+    //     ElevatedButton.icon(
+    //         onPressed: incrementDate,
+    //         icon: const Icon(Icons.arrow_forward),
+    //         label: const Text("Next Day"),
+    // ),?
+    // ],
+    // ),
+    // We dont yet have the functionality to add a kid yet.
+    // floatingActionButton: FloatingActionButton(
+    //   onPressed: _addKid,
+    //   tooltip: 'Add Kid',
+    //   child: const Icon(Icons.add),
+    // ), // This trailing comma makes auto-formatting nicer for build methods.
   }
 }

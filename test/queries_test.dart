@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test("Can get kids from mongo", () async {
-    var kids = await getKidsMongo();
+    var kids = await getKidsMongo(DateTime.now());
     assert(kids[0].name == "Eliyahu");
     assert(kids[1].name == "Yosef");
   });

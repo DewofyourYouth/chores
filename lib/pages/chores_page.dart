@@ -16,7 +16,7 @@ class KidsChoresPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var kidName = data.name;
-    var date = getDay();
+    var date = data.date;
     return Scaffold(
         appBar: AppBar(
           title: Text("$kidName Chores Page"),
@@ -29,7 +29,7 @@ class KidsChoresPage extends StatelessWidget {
 
 FutureBuilder kidsChoreBuilder(DateTime date, String kidName) {
   return FutureBuilder(
-      future: getChores(kidName, date),
+      future: getChoreDay(kidName, date),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const PianoSpinner(
@@ -42,8 +42,7 @@ FutureBuilder kidsChoreBuilder(DateTime date, String kidName) {
           );
         }
         if (snapshot.hasData) {
-          return ChoresList(
-              now: DateTime.now(), chores: snapshot.data, name: kidName);
+          return ChoresList(date: date, chores: snapshot.data, name: kidName);
         } else {
           return const Text("Howdy");
         }

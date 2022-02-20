@@ -1,4 +1,5 @@
-import 'package:chores/components/chores/score_card.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -8,17 +9,18 @@ import 'chore_card.dart';
 class ChoresList extends StatelessWidget {
   const ChoresList({
     Key? key,
-    required this.now,
+    required this.date,
     required this.chores,
     required this.name,
   }) : super(key: key);
 
-  final DateTime now;
+  final DateTime date;
   final ChoreDay chores;
   final String name;
 
   @override
   Widget build(BuildContext context) {
+    log(date.toString());
     return ListView(
       padding: const EdgeInsets.all(20.0),
       scrollDirection: Axis.vertical,
@@ -27,7 +29,7 @@ class ChoresList extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(8.0, 10.0, 8.0, 15.0),
           child: Center(
             child: Text(
-              "Chores for ${DateFormat("EEEE, MMM d").format(now)}:",
+              "Chores for ${DateFormat("EEEE, MMM d").format(date)}:",
               style: const TextStyle(
                 color: Colors.lightBlueAccent,
                 fontFamily: "RobotoSlab",
@@ -42,6 +44,7 @@ class ChoresList extends StatelessWidget {
               chores: chores,
               chore: c,
               name: name,
+              date: date,
             ),
           ),
         ),

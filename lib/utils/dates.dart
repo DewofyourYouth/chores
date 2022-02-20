@@ -13,7 +13,9 @@ extension DatePresets on DateTime {
   }
 
   bool isAlternatingDay() {
-    const daysOffAlternating = [DateTime.friday, DateTime.saturday];
+    const daysOffAlternating = [
+      DateTime.friday,
+    ];
     return !daysOffAlternating.contains(weekday);
   }
 }

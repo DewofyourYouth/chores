@@ -8,6 +8,7 @@ import '../../database/models/chore_day.dart';
 import '../ui/done_indicator.dart';
 
 class ChoreCard extends StatefulWidget {
+  final DateTime date;
   final Chore chore;
   final ChoreDay chores;
   final String name;
@@ -15,6 +16,7 @@ class ChoreCard extends StatefulWidget {
     Key? key,
     required this.chore,
     required this.name,
+    required this.date,
     // required this.done,
     required this.chores,
   }) : super(key: key);
@@ -37,7 +39,7 @@ class _ChoreCardState extends State<ChoreCard> {
     });
     currentChore.done = done;
     log("marking ${currentChore.chore} as ${currentChore.done ? 'done' : 'not done'}");
-    updateChore(widget.chores);
+    updateChore(widget.chores, widget.date);
   }
 
   @override
