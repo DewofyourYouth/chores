@@ -74,66 +74,43 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: kidsFuture,
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        color: Colors.tealAccent,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed: decrementDate,
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+              tooltip: "Previous Day",
+            ),
+            IconButton(
+              onPressed: resetDate,
+              icon: const Icon(
+                Icons.refresh,
+                color: Colors.black,
+              ),
+              tooltip: "Rest to current date",
+            ),
+            IconButton(
+              onPressed: incrementDate,
+              icon: const Icon(
+                Icons.arrow_forward,
+                color: Colors.black,
+              ),
+              tooltip: "Next Day",
+            )
+          ],
         ),
-        body: kidsFuture,
-        bottomNavigationBar: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          color: Colors.tealAccent,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: decrementDate,
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-                tooltip: "Previous Day",
-              ),
-              IconButton(
-                onPressed: resetDate,
-                icon: const Icon(
-                  Icons.refresh,
-                  color: Colors.black,
-                ),
-                tooltip: "Rest to current date",
-              ),
-              IconButton(
-                onPressed: incrementDate,
-                icon: const Icon(
-                  Icons.arrow_forward,
-                  color: Colors.black,
-                ),
-                tooltip: "Next Day",
-              )
-            ],
-          ),
-        ));
-    // bottomNavigationBar: Row(
-    //   mainAxisAlignment: MainAxisAlignment.center,
-    //   children: [
-    //     ElevatedButton.icon(
-    //         onPressed: decrementDate,
-    //         icon: const Icon(Icons.arrow_back),
-    //         label: const Text("Next Day")),
-    //     ElevatedButton.icon(
-    //         onPressed: resetDate,
-    //         icon: const Icon(Icons.refresh),
-    //         label: const Text("Current Day")),
-    //     ElevatedButton.icon(
-    //         onPressed: incrementDate,
-    //         icon: const Icon(Icons.arrow_forward),
-    //         label: const Text("Next Day"),
-    // ),?
-    // ],
-    // ),
-    // We dont yet have the functionality to add a kid yet.
-    // floatingActionButton: FloatingActionButton(
-    //   onPressed: _addKid,
-    //   tooltip: 'Add Kid',
-    //   child: const Icon(Icons.add),
-    // ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+    );
   }
 }

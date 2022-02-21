@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chores/database/models/chore_constants.dart';
 import 'package:chores/database/queries.dart';
 import 'package:flutter/material.dart';
 
@@ -26,19 +27,23 @@ class ChoreCard extends StatefulWidget {
 }
 
 class _ChoreCardState extends State<ChoreCard> {
-  bool done = false;
+  ChoreState done = ChoreState.unmarked;
   Chore getCurrentChore() {
     var cl = widget.chores.chores;
     return cl[cl.indexWhere((element) => element.chore == widget.chore.chore)];
   }
 
+  ChoreState cs = ChoreState.unmarked;
+
   void toggleChore() {
     var currentChore = getCurrentChore();
     setState(() {
-      done = !currentChore.done;
+      done = currentChore.done.next();
+      // cs = cs.next();
+      log(cs.name);
     });
     currentChore.done = done;
-    log("marking ${currentChore.chore} as ${currentChore.done ? 'done' : 'not done'}");
+    log("marking ${currentChore.chore} as ${done == ChoreState.done ? 'done' : 'not done'}");
     updateChore(widget.chores, widget.date);
   }
 

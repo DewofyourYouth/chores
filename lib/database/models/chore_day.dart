@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:chores/database/models/chore_constants.dart';
 import 'package:chores/utils/dates.dart';
 import 'package:chores/utils/strings.dart';
 import 'package:chores/utils/utils.dart';
@@ -16,17 +18,17 @@ class ChoreDay {
   DateTime date;
   List<Chore> chores;
 
-  int calculateDailyScore() {
-    return chores
-        .map((c) => c.isAlternating
-            ? c.done
-                ? 3
-                : 0
-            : c.done
-                ? 1
-                : -1)
-        .reduce((value, element) => value + element);
-  }
+  // int calculateDailyScore() {
+  //   return chores
+  //       .map((c) => c.isAlternating
+  //           ? c.done
+  //               ? 3
+  //               : 0
+  //           : c.done
+  //               ? 1
+  //               : -1)
+  //       .reduce((value, element) => value + element);
+  // }
 
   ChoreDay({
     required this.id,
@@ -94,13 +96,15 @@ class ChoreDay {
 
 ChoreDay initializeChoreDay(String kidName, DateTime date) {
   var chores = daiyChores
-      .map((c) => Chore(chore: c, done: false, isAlternating: false))
+      .map((c) =>
+          Chore(chore: c, done: ChoreState.unmarked, isAlternating: false))
       .toList();
+  log(chores.toString());
   var altMap = createDailyAlternating(date);
   if (altMap.isNotEmpty) {
     chores.add(Chore(
         chore: createDailyAlternating(date)[kidName],
-        done: false,
+        done: ChoreState.unmarked,
         isAlternating: true));
   }
   // log(chores.toString());
