@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:chores/database/models/chore_constants.dart';
+
 class Chore {
   String chore;
-  bool done;
+  ChoreState done;
   bool isAlternating;
 
   Chore({
@@ -13,7 +15,7 @@ class Chore {
 
   Chore copyWith({
     String? chore,
-    bool? done,
+    ChoreState? done,
     bool? isAlternating,
   }) {
     return Chore(
@@ -26,15 +28,23 @@ class Chore {
   Map<String, dynamic> toMap() {
     return {
       'chore': chore,
-      'done': done,
+      'done': toMapHelper(done),
       'isAlternating': isAlternating,
     };
+  }
+
+  int calculatePoints() {
+    var choreInt = toMapHelper(done);
+    if (!isAlternating) {
+      return choreInt;
+    }
+    return done != ChoreState.notDone ? choreInt * 3 : 0;
   }
 
   factory Chore.fromMap(Map<String, dynamic> map) {
     return Chore(
       chore: map['chore'] ?? '',
-      done: map['done'] ?? false,
+      done: fromMapHelper(map['done']),
       isAlternating: map['isAlternating'] ?? false,
     );
   }
@@ -55,4 +65,28 @@ class Chore {
 
   @override
   int get hashCode => chore.hashCode ^ done.hashCode;
+}
+
+int toMapHelper(ChoreState cs) {
+  switch (cs) {
+    case ChoreState.unmarked:
+      return 0;
+    case ChoreState.done:
+      return 1;
+    case ChoreState.notDone:
+      return -1;
+  }
+}
+
+ChoreState fromMapHelper(int cs) {
+  switch (cs) {
+    case 0:
+      return ChoreState.unmarked;
+    case 1:
+      return ChoreState.done;
+    case -1:
+      return ChoreState.notDone;
+    default:
+      return ChoreState.unmarked;
+  }
 }
