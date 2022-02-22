@@ -1,5 +1,6 @@
 import 'package:chores/constants.dart';
 import 'package:chores/database/models/chore.dart';
+import 'package:chores/database/models/chore_constants.dart';
 import 'package:chores/database/models/chore_day.dart';
 import 'package:chores/utils/dates.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -31,7 +32,7 @@ main() {
     expect(altMap.isEmpty, true);
   });
 
-  test("No alternating chores on Fridays or Saturdays", () {
+  test("No alternating chores on Fridays", () {
     var friday = DateTime(2022, 2, 18);
     var saturday = DateTime(2022, 2, 19);
     var sunday = DateTime(2022, 2, 20);
@@ -39,7 +40,7 @@ main() {
     var altMap2 = createDailyAlternating(saturday);
     var altMap3 = createDailyAlternating(sunday);
     expect(altMap1.isEmpty, true);
-    expect(altMap2.isEmpty, true);
+    expect(altMap2.isEmpty, false);
     expect(altMap3.isEmpty, false);
   });
 
@@ -77,29 +78,71 @@ main() {
   test("Can calculate daily score", () {
     var chores1 =
         ChoreDay(id: "bla", kidName: "Billy", date: DateTime.now(), chores: [
-      Chore(chore: "Something else", done: false, isAlternating: false),
-      Chore(chore: "Do somthing", done: true, isAlternating: true),
+      Chore(
+          chore: "Something else",
+          done: ChoreState.notDone,
+          isAlternating: false),
+      Chore(chore: "Do somthing", done: ChoreState.done, isAlternating: true),
     ]);
     var chores2 =
         ChoreDay(id: "boop", kidName: "Sally", date: DateTime.now(), chores: [
-      Chore(chore: "Do something", done: false, isAlternating: false),
-      Chore(chore: "Do another thing", done: true, isAlternating: false),
-      Chore(chore: "Do something else", done: true, isAlternating: true),
+      Chore(
+          chore: "Do something",
+          done: ChoreState.notDone,
+          isAlternating: false),
+      Chore(
+          chore: "Do another thing",
+          done: ChoreState.done,
+          isAlternating: false),
+      Chore(
+          chore: "Do something else",
+          done: ChoreState.done,
+          isAlternating: true),
     ]);
     var chores3 =
         ChoreDay(id: "boop", kidName: "Timmy", date: DateTime.now(), chores: [
-      Chore(chore: "Something else", done: true, isAlternating: false),
-      Chore(chore: "Do something", done: false, isAlternating: true),
+      Chore(
+          chore: "Something else", done: ChoreState.done, isAlternating: false),
+      Chore(
+          chore: "Do something", done: ChoreState.notDone, isAlternating: true),
     ]);
     var chores4 =
         ChoreDay(id: "boop", kidName: "Sally", date: DateTime.now(), chores: [
-      Chore(chore: "Do something", done: false, isAlternating: false),
-      Chore(chore: "Do another thing", done: false, isAlternating: false),
-      Chore(chore: "Do something else", done: false, isAlternating: true),
+      Chore(
+          chore: "Do something",
+          done: ChoreState.notDone,
+          isAlternating: false),
+      Chore(
+          chore: "Do another thing",
+          done: ChoreState.notDone,
+          isAlternating: false),
+      Chore(
+          chore: "Do something else",
+          done: ChoreState.notDone,
+          isAlternating: true),
     ]);
     expect(chores1.calculateDailyScore(), 2);
     expect(chores2.calculateDailyScore(), 3);
     expect(chores3.calculateDailyScore(), 1);
     expect(chores4.calculateDailyScore(), -2);
+  });
+
+  test("Unmarked doesn't subtract points", () {
+    var chores =
+        ChoreDay(id: "boop", kidName: "Sally", date: DateTime.now(), chores: [
+      Chore(
+          chore: "Do something",
+          done: ChoreState.unmarked,
+          isAlternating: false),
+      Chore(
+          chore: "Do another thing",
+          done: ChoreState.unmarked,
+          isAlternating: false),
+      Chore(
+          chore: "Do something else",
+          done: ChoreState.unmarked,
+          isAlternating: true),
+    ]);
+    expect(chores.calculateDailyScore(), 0);
   });
 }

@@ -18,17 +18,11 @@ class ChoreDay {
   DateTime date;
   List<Chore> chores;
 
-  // int calculateDailyScore() {
-  //   return chores
-  //       .map((c) => c.isAlternating
-  //           ? c.done
-  //               ? 3
-  //               : 0
-  //           : c.done
-  //               ? 1
-  //               : -1)
-  //       .reduce((value, element) => value + element);
-  // }
+  int calculateDailyScore() {
+    return chores
+        .map((c) => c.calculatePoints())
+        .reduce((value, element) => value + element);
+  }
 
   ChoreDay({
     required this.id,

@@ -39,7 +39,6 @@ class _ChoreCardState extends State<ChoreCard> {
     var currentChore = getCurrentChore();
     setState(() {
       done = currentChore.done.next();
-      // cs = cs.next();
       log(cs.name);
     });
     currentChore.done = done;

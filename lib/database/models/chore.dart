@@ -33,6 +33,14 @@ class Chore {
     };
   }
 
+  int calculatePoints() {
+    var choreInt = toMapHelper(done);
+    if (!isAlternating) {
+      return choreInt;
+    }
+    return done != ChoreState.notDone ? choreInt * 3 : 0;
+  }
+
   factory Chore.fromMap(Map<String, dynamic> map) {
     return Chore(
       chore: map['chore'] ?? '',
