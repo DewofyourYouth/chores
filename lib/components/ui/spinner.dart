@@ -12,7 +12,6 @@ class PianoSpinner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(spinnerMsg);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,

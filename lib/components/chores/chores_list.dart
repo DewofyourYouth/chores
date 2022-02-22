@@ -20,7 +20,6 @@ class ChoresList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(date.toString());
     return ListView(
       padding: const EdgeInsets.all(20.0),
       scrollDirection: Axis.vertical,

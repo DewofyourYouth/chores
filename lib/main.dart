@@ -1,6 +1,7 @@
+import 'dart:developer';
+
 import 'package:chores/utils/dates.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'components/kids/get_kids_from_datebase.dart';
 
@@ -50,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void resetDate() {
     setState(() {
       date = DateTime.now();
+      log(date.toString());
       kidsFuture = getMongoKidsWidgets(date);
     });
   }
@@ -57,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void decrementDate() {
     setState(() {
       date = date.addDays(-1);
+      log(date.toString());
       kidsFuture = getMongoKidsWidgets(date);
       // final snackBar =
       //     SnackBar(content: Text(weekdayMonthDayYear.format(date)));
@@ -67,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void incrementDate() {
     setState(() {
       date = date.addDays(1);
+      log(date.toString());
       kidsFuture = getMongoKidsWidgets(date);
     });
   }
