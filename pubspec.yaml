@@ -41,6 +41,7 @@ dependencies:
   test: ^1.19.5
   flutter_bloc: ^8.0.1
   bloc: ^8.0.2
+  get: ^4.6.1
 
 dev_dependencies:
   flutter_test:
