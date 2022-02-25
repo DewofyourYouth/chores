@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:chores/database/models/chore_constants.dart';
+import 'package:chores/database/models/chores/daily_chore.dart';
 import 'package:chores/utils/dates.dart';
 import 'package:chores/utils/strings.dart';
 import 'package:chores/utils/utils.dart';
@@ -10,19 +11,14 @@ import 'package:flutter/foundation.dart';
 import 'package:chores/components/chores/utils.dart';
 import 'package:chores/constants.dart';
 
-import 'chore.dart';
+import 'chores/alternating_chore.dart';
+import 'chores/chore.dart';
 
 class ChoreDay {
   String id;
   String kidName;
   DateTime date;
   List<Chore> chores;
-
-  int calculateDailyScore() {
-    return chores
-        .map((c) => c.calculatePoints())
-        .reduce((value, element) => value + element);
-  }
 
   ChoreDay({
     required this.id,
@@ -59,7 +55,7 @@ class ChoreDay {
       id: map['_id'] ?? '',
       kidName: map['kidName'] ?? '',
       date: map['Date'] ?? getDay(),
-      chores: List<Chore>.from(map['chores']?.map((x) => Chore.fromMap(x))),
+      chores: List<Chore>.from(map['chores']?.map((x) => chooseFromMap(x))),
     );
   }
 
@@ -89,19 +85,19 @@ class ChoreDay {
 }
 
 ChoreDay initializeChoreDay(String kidName, DateTime date) {
-  var chores = daiyChores
-      .map((c) =>
-          Chore(chore: c, done: ChoreState.unmarked, isAlternating: false))
+  List<Chore> chores = dailyChores
+      .map((c) => DailyChore(
+            chore: c,
+            done: ChoreState.unmarked,
+          ))
       .toList();
-  log(chores.toString());
   var altMap = createDailyAlternating(date);
   if (altMap.isNotEmpty) {
-    chores.add(Chore(
-        chore: createDailyAlternating(date)[kidName],
-        done: ChoreState.unmarked,
-        isAlternating: true));
+    chores.add(AlternatingChore(
+      chore: createDailyAlternating(date)[kidName],
+      done: ChoreState.unmarked,
+    ));
   }
-  // log(chores.toString());
   var id = createChoreDayId(kidName, date);
   return ChoreDay(id: id, kidName: kidName, date: date, chores: chores);
 }

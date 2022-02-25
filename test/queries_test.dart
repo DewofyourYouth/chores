@@ -1,3 +1,5 @@
+// import 'dart:developer';
+
 import 'package:chores/database/queries.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -10,8 +12,16 @@ void main() {
 
   test("Get all chore days returns all chore days", () async {
     var choreDays = await getAllChoreDays();
-    assert(choreDays[0].kidName == "Eliyahu");
     expect(
         choreDays[0].chores[0].chore, "Breakfast: clear dishes and utensils");
+  });
+
+  test("Get kids with choreDays", () async {
+    var choreDays = await getKidsWithChoreDays();
+    // print(choreDays);
+    expect(choreDays[0]['name'], "Eliyahu");
+    expect(choreDays[0]['points'].runtimeType, int);
+    expect(choreDays[1]['name'], "Yosef");
+    expect(choreDays[1]['points'].runtimeType, int);
   });
 }

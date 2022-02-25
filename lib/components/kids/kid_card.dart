@@ -23,7 +23,6 @@ class KidCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var data = Data(name: kid.name, date: date);
-    log(data.date.toString());
     return Card(
       child: Column(
         mainAxisSize: MainAxisSize.min,

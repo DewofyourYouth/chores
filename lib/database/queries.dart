@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:chores/database/models/chore_day.dart';
+import 'package:chores/database/models/chores/alternating_chore.dart';
+import 'package:chores/database/models/chores/daily_chore.dart';
 import 'package:chores/secrets.dart';
 import 'package:chores/components/chores/utils.dart';
 import 'package:mongo_dart/mongo_dart.dart';
@@ -28,6 +30,40 @@ Future<List<Kid>> getKidsMongo(DateTime date) async {
     kidList.add(k);
   }
   return kidList;
+}
+
+// Not ready
+Future<List<dynamic>> getKidsWithChoreDays() async {
+  final kids = await getCollection("kids");
+  final pipeline = AggregationPipelineBuilder()
+      .addStage(Lookup(
+          from: 'chores',
+          localField: 'name',
+          foreignField: 'kidName',
+          as: 'choreDays'))
+      .build();
+  final result = await kids.aggregateToStream(pipeline).toList();
+  var kidsList = result.toList().map((e) => (makeKidPointsList(e)));
+  var kl = [];
+  for (var k in kidsList) {
+    var points = k['points']
+        .map((v) => v.reduce((sum, el) => sum + el))
+        .reduce((sum, el) => sum + el);
+    k['points'] = points;
+    var m = {"name": k['name'], 'points': points};
+    kl.add(m);
+  }
+  return kl;
+}
+
+Map<String, dynamic> makeKidPointsList(Map<String, dynamic> e) {
+  return {
+    "name": e['name'],
+    "points": e['choreDays'].map((cd) => cd['chores'].map((c) =>
+        c['isAlternating'] == true
+            ? AlternatingChore.fromMap(c).getPoints()
+            : DailyChore.fromMap(c).getPoints()))
+  };
 }
 
 void updateChore(ChoreDay chore, DateTime date) async {
@@ -70,4 +106,13 @@ Future<List<ChoreDay>> getAllChoreDays() async {
   var choresList =
       choreDayCollection.find().map((data) => ChoreDay.fromMap(data)).toList();
   return choresList;
+}
+
+void addDailyChores(String chore, String description) async {
+  var dailyChoresCollection = await getCollection('daily-chores');
+  dailyChoresCollection.insertOne({
+    "_id": choreFormatter(chore),
+    'chore': chore,
+    "description": description,
+  });
 }

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chores/pages/new_chore.dart';
 import 'package:chores/utils/dates.dart';
 import 'package:flutter/material.dart';
 
@@ -108,6 +109,21 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: incrementDate,
               icon: const Icon(
                 Icons.arrow_forward,
+                color: Colors.black,
+              ),
+              tooltip: "Next Day",
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NewChore(),
+                  ),
+                );
+              },
+              icon: const Icon(
+                Icons.add,
                 color: Colors.black,
               ),
               tooltip: "Next Day",

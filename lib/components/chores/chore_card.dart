@@ -4,7 +4,7 @@ import 'package:chores/database/models/chore_constants.dart';
 import 'package:chores/database/queries.dart';
 import 'package:flutter/material.dart';
 
-import '../../database/models/chore.dart';
+import '../../database/models/chores/chore.dart';
 import '../../database/models/chore_day.dart';
 import '../ui/done_indicator.dart';
 
@@ -39,16 +39,14 @@ class _ChoreCardState extends State<ChoreCard> {
     var currentChore = getCurrentChore();
     setState(() {
       done = currentChore.done.next();
-      log(cs.name);
     });
     currentChore.done = done;
-    log("marking ${currentChore.chore} as ${done == ChoreState.done ? 'done' : 'not done'}");
     updateChore(widget.chores, widget.date);
   }
 
   @override
   Widget build(BuildContext context) {
-    var alternating = widget.chore.isAlternating;
+    var alternating = widget.chore.isAlternating();
     return Card(
         color: !alternating ? Colors.grey[600] : Colors.blueGrey,
         child: ListTile(

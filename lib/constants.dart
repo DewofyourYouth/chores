@@ -4,7 +4,7 @@ const alternatingChores = [
   "Sweep and clear {room} floor"
 ];
 
-const daiyChores = [
+const dailyChores = [
   "Breakfast: clear dishes and utensils",
   "Clearing dishes after meals",
   "Put away coats, tik and shoes",

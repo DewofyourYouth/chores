@@ -63,3 +63,14 @@ class Kid {
         alternatingPoints.hashCode;
   }
 }
+
+class NewKid {
+  final String name;
+  final int points;
+  NewKid({required this.name, required this.points});
+
+  @override
+  String toString() {
+    return "NewKid(name: $name, points: $points";
+  }
+}

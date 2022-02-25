@@ -10,7 +10,6 @@ import 'kid_card.dart';
 FutureBuilder getMongoKidsWidgets(DateTime date) {
   var dateStr = weekdayMonthDayYear.format(date);
   var kids = getKidsMongo(date);
-  log(dateStr);
   return FutureBuilder(
       future: kids,
       builder: (context, snapshot) {
@@ -25,7 +24,6 @@ FutureBuilder getMongoKidsWidgets(DateTime date) {
           );
         }
         if (snapshot.hasData) {
-          log(snapshot.data.toString());
           return ListView(
             children: [
               Center(
