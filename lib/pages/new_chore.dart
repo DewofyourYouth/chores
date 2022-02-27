@@ -49,7 +49,6 @@ class NewChore extends StatelessWidget {
                   val = controller.isAlternating.value;
                   log(controller.isAlternating.toString());
                 },
-                // onChanged: controller.toggleAlternating,
               ),
             ),
           ),

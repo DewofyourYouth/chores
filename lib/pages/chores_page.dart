@@ -1,11 +1,9 @@
-// import 'package:chores/database/models/chore_day.dart';
-import 'package:chores/utils/dates.dart';
 import 'package:flutter/material.dart';
 
-import '../components/chores/chores_list.dart';
-import '../components/kids/kid_card.dart';
-import '../components/ui/spinner.dart';
-import '../database/queries.dart';
+import 'package:chores/components/chores/chores_list.dart';
+import 'package:chores/components/kids/kid_card.dart';
+import 'package:chores/components/ui/spinner.dart';
+import 'package:chores/database/queries.dart';
 
 //
 
