@@ -108,11 +108,13 @@ Future<List<ChoreDay>> getAllChoreDays() async {
   return choresList;
 }
 
-void addDailyChores(String chore, String description) async {
+void addDailyChores(
+    String chore, String description, bool isAlternating) async {
   var dailyChoresCollection = await getCollection('daily-chores');
   dailyChoresCollection.insertOne({
     "_id": choreFormatter(chore),
     'chore': chore,
     "description": description,
+    "isAlternating": isAlternating,
   });
 }

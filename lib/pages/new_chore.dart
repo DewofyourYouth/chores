@@ -1,50 +1,15 @@
 import 'dart:developer';
 
-import 'package:chores/database/queries.dart';
+import 'package:chores/controllers/chore_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 enum ChoreType { daily, alternation }
 
-class NewChore extends StatefulWidget {
-  const NewChore({Key? key}) : super(key: key);
+class NewChore extends StatelessWidget {
+  final controller = Get.put(ChoreController());
 
-  @override
-  State<NewChore> createState() => _NewChoreState();
-}
-
-class _NewChoreState extends State<NewChore> {
-  final choreTextController = TextEditingController();
-  final descriptionTextController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Start listening to changes.
-    // choreTextController.addListener(_printLatestValue);
-  }
-
-  @override
-  void dispose() {
-    // Clean up the controller when the widget is removed from the widget tree.
-    // This also removes the _printLatestValue listener.
-    descriptionTextController.dispose();
-    choreTextController.dispose();
-    super.dispose();
-  }
-
-  void _printLatestValue() {
-    log('Chore: ${choreTextController.text}');
-    log("Description: ${descriptionTextController.text}");
-  }
-
-  void addNewChore() {
-    addDailyChores(
-      choreTextController.text,
-      descriptionTextController.text,
-    );
-    _printLatestValue();
-  }
+  NewChore({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +23,9 @@ class _NewChoreState extends State<NewChore> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: TextFormField(
-              controller: choreTextController,
+              controller: controller.choreTextController,
               decoration: const InputDecoration(
-                border: UnderlineInputBorder(),
+                border: OutlineInputBorder(),
                 labelText: 'Enter chore here',
               ),
             ),
@@ -68,14 +33,28 @@ class _NewChoreState extends State<NewChore> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 24),
             child: TextFormField(
-              controller: descriptionTextController,
+              controller: controller.descriptionTextController,
               decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Enter description here"),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+            child: Obx(
+              () => Checkbox(
+                value: controller.isAlternating.value,
+                onChanged: (bool? val) {
+                  controller.toggleIsAlternating();
+                  val = controller.isAlternating.value;
+                  log(controller.isAlternating.toString());
+                },
+                // onChanged: controller.toggleAlternating,
+              ),
+            ),
+          ),
           ElevatedButton(
-            onPressed: addNewChore,
+            onPressed: controller.addNewChore,
             child: const Text("Add Chore"),
           )
         ],
