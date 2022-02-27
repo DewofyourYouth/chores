@@ -12,7 +12,9 @@ class Settings extends StatelessWidget {
           title: const Text("Settings"),
         ),
         body: ListView(
-          children: [NewChore()],
+          children: [
+            NewChore(),
+          ],
         ));
   }
 }
