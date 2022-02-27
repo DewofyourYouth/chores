@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:chores/database/models/chore_constants.dart';
 import 'package:chores/database/models/chore_day.dart';
 import 'package:chores/database/models/chores/alternating_chore.dart';
 import 'package:chores/database/models/chores/daily_chore.dart';
@@ -80,7 +81,7 @@ void updateChore(ChoreDay chore, DateTime date) async {
 }
 
 Future<int> initializeChores(String kidName, DateTime date) async {
-  var choreDay = initializeChoreDay(kidName, date);
+  var choreDay = await initializeChoreDay(kidName, date);
   var choreCollection = await getCollection('chores');
   choreCollection.insertOne(choreDay.toMap());
   return 1;
@@ -117,4 +118,14 @@ void addDailyChores(
     "description": description,
     "isAlternating": isAlternating,
   });
+}
+
+Future<List<DailyChore>> getDailyChores() async {
+  var dailyChoreCollection = await getCollection('daily-chores');
+  var dailyChores = await dailyChoreCollection.find().toList();
+  return dailyChores
+      .where((chore) => chore['isAlternating'] != true)
+      .map((chore) =>
+          DailyChore(chore: chore['chore'], done: ChoreState.unmarked))
+      .toList();
 }

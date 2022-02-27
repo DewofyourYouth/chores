@@ -1,10 +1,10 @@
 import 'dart:developer';
 
-import 'package:chores/pages/new_chore.dart';
+import 'package:chores/pages/settings_page.dart';
 import 'package:chores/utils/dates.dart';
 import 'package:flutter/material.dart';
 
-import 'components/kids/get_kids_from_datebase.dart';
+import 'package:chores/components/kids/get_kids_from_datebase.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,7 +45,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<String> kids = [];
-  final myController = TextEditingController();
   DateTime date = DateTime.now();
   FutureBuilder kidsFuture = getMongoKidsWidgets(DateTime.now());
 
@@ -62,9 +61,6 @@ class _MyHomePageState extends State<MyHomePage> {
       date = date.addDays(-1);
       log(date.toString());
       kidsFuture = getMongoKidsWidgets(date);
-      // final snackBar =
-      //     SnackBar(content: Text(weekdayMonthDayYear.format(date)));
-      // ScaffoldMessenger.of(context).showSnackBar(snackBar);
     });
   }
 
@@ -118,12 +114,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NewChore(),
+                    builder: (context) => const Settings(),
                   ),
                 );
               },
               icon: const Icon(
-                Icons.add,
+                Icons.settings,
                 color: Colors.black,
               ),
               tooltip: "Next Day",

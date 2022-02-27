@@ -22,6 +22,7 @@ class ChoreController extends GetxController {
   void onClose() {
     choreTextController.dispose();
     descriptionTextController.dispose();
+    isAlternating = false.obs;
     super.onClose();
   }
 
@@ -43,5 +44,6 @@ class ChoreController extends GetxController {
     _printLatestValue();
     choreTextController.text = "";
     descriptionTextController.text = "";
+    isAlternating = false.obs;
   }
 }

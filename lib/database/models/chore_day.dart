@@ -1,8 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:chores/database/models/chore_constants.dart';
-import 'package:chores/database/models/chores/daily_chore.dart';
+import 'package:chores/database/queries.dart';
 import 'package:chores/utils/dates.dart';
 import 'package:chores/utils/strings.dart';
 import 'package:chores/utils/utils.dart';
@@ -84,13 +83,8 @@ class ChoreDay {
       id.hashCode ^ kidName.hashCode ^ date.hashCode ^ chores.hashCode;
 }
 
-ChoreDay initializeChoreDay(String kidName, DateTime date) {
-  List<Chore> chores = dailyChores
-      .map((c) => DailyChore(
-            chore: c,
-            done: ChoreState.unmarked,
-          ))
-      .toList();
+Future<ChoreDay> initializeChoreDay(String kidName, DateTime date) async {
+  List<Chore> chores = await getDailyChores();
   var altMap = createDailyAlternating(date);
   if (altMap.isNotEmpty) {
     chores.add(AlternatingChore(
