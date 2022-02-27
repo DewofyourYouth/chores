@@ -1,14 +1,14 @@
 import 'dart:convert';
-
-import 'package:chores/database/models/chore_constants.dart';
-import 'package:chores/database/queries.dart';
-import 'package:chores/utils/dates.dart';
-import 'package:chores/utils/strings.dart';
-import 'package:chores/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:chores/components/chores/utils.dart';
-import 'package:chores/constants.dart';
+import 'chore_constants.dart';
+import '../queries.dart';
+import '../../utils/dates.dart';
+import '../../utils/strings.dart';
+import '../../utils/utils.dart';
+
+import '../../components/chores/utils.dart';
+import '../../constants.dart';
 
 import 'chores/alternating_chore.dart';
 import 'chores/chore.dart';

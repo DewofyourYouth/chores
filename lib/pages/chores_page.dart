@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:chores/components/chores/chores_list.dart';
-import 'package:chores/components/kids/kid_card.dart';
-import 'package:chores/components/ui/spinner.dart';
-import 'package:chores/database/queries.dart';
+import '../components/chores/chores_list.dart';
+import '../components/kids/kid_card.dart';
+import '../components/ui/spinner.dart';
+import '../database/queries.dart';
 
 //
 

@@ -1,4 +1,4 @@
-import 'package:chores/database/models/chore_constants.dart';
+import '../chore_constants.dart';
 
 abstract class Chore {
   String chore;

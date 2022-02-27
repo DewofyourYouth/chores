@@ -1,10 +1,10 @@
 import 'dart:developer';
-
-import 'package:chores/pages/settings_page.dart';
-import 'package:chores/utils/dates.dart';
 import 'package:flutter/material.dart';
 
-import 'package:chores/components/kids/get_kids_from_datebase.dart';
+import 'pages/settings_page.dart';
+import 'utils/dates.dart';
+
+import 'components/kids/get_kids_from_datebase.dart';
 
 void main() {
   runApp(const MyApp());
