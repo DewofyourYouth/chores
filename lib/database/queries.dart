@@ -17,23 +17,21 @@ Future<DbCollection> getCollection(String collectionName) async {
   return DbCollection(db, collectionName);
 }
 
-Future<List<Kid>> getKidsMongo(DateTime date) async {
-  var kidsCollection = await getCollection('kids');
-  var kids = await kidsCollection.find().toList();
-  List<Kid> kidList = [];
+Future<List<KidPoints>> getKidsMongo(DateTime date) async {
+  var kids = await getKidsWithChoreDays();
+  List<KidPoints> kidList = [];
   for (var kid in kids) {
     var k = Kid(
-        id: kid["_id"],
-        name: kid["name"],
-        dailyPoints: kid['dailyPoints'],
-        alternatingPoints: kid['alternatingPoints']);
+      id: kid["id"],
+      name: kid["name"],
+    );
+
     initializeChores(kid['name'], date);
-    kidList.add(k);
+    kidList.add(KidPoints(kid: k, points: kid['points']));
   }
   return kidList;
 }
 
-// Not ready
 Future<List<dynamic>> getKidsWithChoreDays() async {
   final kids = await getCollection("kids");
   final pipeline = AggregationPipelineBuilder()
@@ -51,7 +49,11 @@ Future<List<dynamic>> getKidsWithChoreDays() async {
         .map((v) => v.reduce((sum, el) => sum + el))
         .reduce((sum, el) => sum + el);
     k['points'] = points;
-    var m = {"name": k['name'], 'points': points};
+    var m = {
+      "id": k["id"],
+      "name": k['name'],
+      'points': points,
+    };
     kl.add(m);
   }
   return kl;
@@ -59,6 +61,7 @@ Future<List<dynamic>> getKidsWithChoreDays() async {
 
 Map<String, dynamic> makeKidPointsList(Map<String, dynamic> e) {
   return {
+    "id": e["_id"],
     "name": e['name'],
     "points": e['choreDays'].map((cd) => cd['chores'].map((c) =>
         c['isAlternating'] == true
