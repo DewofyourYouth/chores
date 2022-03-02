@@ -123,6 +123,11 @@ void addDailyChores(
   });
 }
 
+void deleteDailyChores(String chore) async {
+  var dailyChoresCollection = await getCollection('daily-chores');
+  dailyChoresCollection.deleteOne({'chore': chore});
+}
+
 Future<List<DailyChore>> getDailyChores() async {
   var dailyChoreCollection = await getCollection('daily-chores');
   var dailyChores = await dailyChoreCollection.find().toList();
