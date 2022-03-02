@@ -8,8 +8,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test("Can get kids from mongo", () async {
     var kids = await getKidsMongo(DateTime.now());
-    assert(kids[0].name == "Eliyahu");
-    assert(kids[1].name == "Yosef");
+    assert(kids[0].kid.name == "Eliyahu");
+    assert(kids[1].kid.name == "Yosef");
   });
 
   test("Get all chore days returns all chore days", () async {
@@ -20,7 +20,7 @@ void main() {
 
   test("Get kids with choreDays", () async {
     var choreDays = await getKidsWithChoreDays();
-    // print(choreDays);
+    print(choreDays);
     expect(choreDays[0]['name'], "Eliyahu");
     expect(choreDays[0]['points'].runtimeType, int);
     expect(choreDays[1]['name'], "Yosef");

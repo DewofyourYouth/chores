@@ -5,13 +5,9 @@ import 'package:mongo_dart/mongo_dart.dart';
 class Kid {
   ObjectId id;
   String name;
-  int dailyPoints;
-  int alternatingPoints;
   Kid({
     required this.id,
     required this.name,
-    required this.dailyPoints,
-    required this.alternatingPoints,
   });
 
   Kid copyWith({
@@ -23,8 +19,6 @@ class Kid {
     return Kid(
       id: id ?? this.id,
       name: name ?? this.name,
-      dailyPoints: dailyPoints ?? this.dailyPoints,
-      alternatingPoints: alternatingPoints ?? this.alternatingPoints,
     );
   }
 
@@ -32,8 +26,6 @@ class Kid {
     return {
       'id': id.toHexString(),
       'name': name,
-      'dailyPoints': dailyPoints,
-      'alternatingPoints': alternatingPoints,
     };
   }
 
@@ -41,36 +33,29 @@ class Kid {
 
   @override
   String toString() {
-    return 'Kid(id: $id, name: $name, dailyPoints: $dailyPoints, alternatingPoints: $alternatingPoints)';
+    return 'Kid(id: $id, name: $name,)';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is Kid &&
-        other.id == id &&
-        other.name == name &&
-        other.dailyPoints == dailyPoints &&
-        other.alternatingPoints == alternatingPoints;
+    return other is Kid && other.id == id && other.name == name;
   }
 
   @override
   int get hashCode {
-    return id.hashCode ^
-        name.hashCode ^
-        dailyPoints.hashCode ^
-        alternatingPoints.hashCode;
+    return id.hashCode ^ name.hashCode;
   }
 }
 
-class NewKid {
-  final String name;
+class KidPoints {
+  final Kid kid;
   final int points;
-  NewKid({required this.name, required this.points});
+  KidPoints({required this.kid, required this.points});
 
   @override
   String toString() {
-    return "NewKid(name: $name, points: $points";
+    return "KidPoints(name: ${kid.toString()}, points: $points";
   }
 }
